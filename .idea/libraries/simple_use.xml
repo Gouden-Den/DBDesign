@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="simple_use">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/commons-logging-1.1.1.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/jstl.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/spring-aop-4.0.0.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/spring-beans-4.0.0.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/spring-context-4.0.0.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/spring-core-4.0.0.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/spring-expression-4.0.0.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/spring-web-4.0.0.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/spring-webmvc-4.0.0.RELEASE.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/javaweb开发/springMVC-1/springMVC-1/WebRoot/WEB-INF/lib/standard.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
