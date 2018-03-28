@@ -66,10 +66,12 @@ public class UserDao extends BaseDao{
             statement.setString(1, userId);
             ResultSet rs = statement.executeQuery();
             User user = new User();
-            user.setUserId(rs.getString(1));
-            user.setUsername(rs.getString(2));
-            user.setPassword(rs.getString(3));
-            user.setRoleId(rs.getString(4));
+            if (rs.next()){
+                user.setUserId(rs.getString(1));
+                user.setUsername(rs.getString(2));
+                user.setPassword(rs.getString(3));
+                user.setRoleId(rs.getString(4));
+            }
             return user;
         }
     }
@@ -81,6 +83,6 @@ public class UserDao extends BaseDao{
         user.setUsername("ha");
         user.setPassword("111");
         user.setRoleId("1");
-        System.out.println(update(user));
+        System.out.println(getUser("2"));
     }
 }
