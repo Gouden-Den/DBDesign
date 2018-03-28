@@ -17,6 +17,8 @@ public class BaseDao {
     }
 
     protected Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        conn.setAutoCommit(false);
+        return conn;
     }
 }

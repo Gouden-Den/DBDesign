@@ -1,6 +1,7 @@
 package dao;
 
 import entity.User;
+import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +9,7 @@ import java.sql.SQLException;
 
 public class UserDao extends BaseDao{
     public boolean insert(User user) throws SQLException {
-        Connection conn = getConnection();
-        try {
+        try(Connection conn = getConnection()) {
             String sql = "insert into table_user(user_id, user_name, password) values (?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, user.getUserId());
@@ -21,13 +21,53 @@ public class UserDao extends BaseDao{
                 return true;
             }
         }catch (Exception e){
-            try {
-                conn.rollback();
-            }catch (Exception e1){
-            }
-        }finally {
-            conn.close();
+            e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean delete(String userId) throws SQLException {
+        try(Connection conn = getConnection()) {
+            String sql = "delete from table_user where user_id=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, userId);
+            int res = statement.executeUpdate();
+            conn.commit();
+            if (res > 0){
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean update(User user) throws SQLException {
+        try(Connection conn = getConnection()) {
+            String sql = "update table_user set user_name=?, password=?, role_id=? where user_id=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getRoleId());
+            statement.setString(4, user.getUserId());
+            int res = statement.executeUpdate();
+            conn.commit();
+            if (res > 0){
+                return true;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Test
+    public void test() throws SQLException {
+        User user = new User();
+        user.setUserId("2");
+        user.setUsername("ha");
+        user.setPassword("111");
+        user.setRoleId("1");
+        System.out.println(update(user));
     }
 }
