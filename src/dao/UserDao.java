@@ -3,9 +3,7 @@ package dao;
 import entity.User;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserDao extends BaseDao{
     public boolean insert(User user) throws SQLException {
@@ -59,6 +57,21 @@ public class UserDao extends BaseDao{
             e.printStackTrace();
         }
         return false;
+    }
+
+    public User getUser(String userId) throws SQLException {
+        try(Connection conn = getConnection()) {
+            String sql = "select * from table_user where user_id=?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, userId);
+            ResultSet rs = statement.executeQuery();
+            User user = new User();
+            user.setUserId(rs.getString(1));
+            user.setUsername(rs.getString(2));
+            user.setPassword(rs.getString(3));
+            user.setRoleId(rs.getString(4));
+            return user;
+        }
     }
 
     @Test
