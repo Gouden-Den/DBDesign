@@ -9,9 +9,7 @@ public class ReflectTools {
         T t1 = t.newInstance();
         Field [] fields = t.getDeclaredFields();
         for (Field field : fields){
-            System.out.println(field.getName());
             Method method = t.getMethod("set" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1), field.getType());
-            System.out.println(method.getName());
             method.invoke(t1, request.getParameter(field.getName()));
         }
         return t1;
