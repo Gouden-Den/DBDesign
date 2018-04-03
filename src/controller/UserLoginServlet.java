@@ -16,7 +16,7 @@ public class UserLoginServlet extends HttpServlet{
             User user = userService.login(request.getParameter("userId"), request.getParameter("password"));
             if (user != null){
                 request.setAttribute("user", user);
-                request.getRequestDispatcher("/view/page/login.jsp").forward(request, response);
+                request.getRequestDispatcher("/page/index.jsp").forward(request, response);
             }
         }catch (Exception e){
             e.printStackTrace();
