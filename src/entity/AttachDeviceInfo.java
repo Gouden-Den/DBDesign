@@ -1,5 +1,5 @@
 package entity;
-import java.sql.*;
+
 public class AttachDeviceInfo {
     String deviceID;
     int attachType;

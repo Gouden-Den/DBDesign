@@ -1,15 +1,15 @@
 package entity;
 
 public class Role {
-    private String roleId;
+    private String roleID;
     private String roleName;
 
     public String getRoleID() {
-        return roleId;
+        return roleID;
     }
 
     public void setRoleID(String roleId) {
-        this.roleId = roleId;
+        this.roleID = roleId;
     }
 
     public String getRoleName() {
