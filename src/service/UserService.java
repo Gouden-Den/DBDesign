@@ -2,6 +2,7 @@ package service;
 
 import dao.UserDao;
 import entity.User;
+import tools.GenerateTools;
 
 import java.sql.SQLException;
 
@@ -11,13 +12,14 @@ public class UserService {
     public User login(String userId, String password) throws SQLException {
         User user;
         user = userDao.getUser(userId);
-        if (user != null && user.getPassword().equals(password)){
+        if (user != null && user.getPassword() != null && user.getPassword().equals(password)){
             return user;
         }
         return null;
     }
 
     public boolean insert(User user) throws SQLException {
+        user.setUserId(GenerateTools.getId());
         return userDao.insert(user);
     }
 

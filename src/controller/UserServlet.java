@@ -40,6 +40,12 @@ public class UserServlet extends HttpServlet{
     private void login(HttpServletRequest request, HttpServletResponse response){
         try {
             User user =  userService.login(request.getParameter("userId"), request.getParameter("password"));
+            if (user != null){
+                request.getSession().setAttribute("userId", user.getUserId());
+                response.sendRedirect("/page/index.jsp");
+            }else {
+                response.sendRedirect("/page/login.jsp?tips=1");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
