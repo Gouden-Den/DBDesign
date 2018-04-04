@@ -16,7 +16,7 @@ public class GenerateTools {
             public void run() {
                 calendar = Calendar.getInstance();
             }
-        }, 0L, 24 * 60 * 60 * 1000L);
+        }, 0L, 60 * 60 * 1000L);
     }
 
     public static String getId(){
