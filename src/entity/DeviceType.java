@@ -3,8 +3,8 @@ import java.sql.*;
 public class DeviceType {
     String typeID;
     String typeName;
-    int deviceNum;
-    double deviceValue;
+    Integer deviceNum;
+    Double deviceValue;
 
     public String getTypeID() {
         return typeID;
@@ -22,19 +22,19 @@ public class DeviceType {
         this.typeName = typeName;
     }
 
-    public int getDeviceNum() {
+    public Integer getDeviceNum() {
         return deviceNum;
     }
 
-    public void setDeviceNum(int deviceNum) {
+    public void setDeviceNum(Integer deviceNum) {
         this.deviceNum = deviceNum;
     }
 
-    public double getDeviceValue() {
+    public Double getDeviceValue() {
         return deviceValue;
     }
 
-    public void setDeviceValue(double deviceValue) {
+    public void setDeviceValue(Double deviceValue) {
         this.deviceValue = deviceValue;
     }
 }

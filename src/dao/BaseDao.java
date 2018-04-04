@@ -1,6 +1,9 @@
 package dao;
 
+import tools.ReflectTools;
+
 import java.sql.*;
+import java.util.List;
 
 public class BaseDao {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -20,5 +23,16 @@ public class BaseDao {
         Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         conn.setAutoCommit(false);
         return conn;
+    }
+
+    public <T> List<T> queryAll(String sql, Object [] params, Class<T> t) throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        if (params != null){
+            for (int i = 0; i < params.length; i++){
+                statement.setObject(i + 1, params[i]);
+            }
+        }
+        return ReflectTools.DBReflectTo(statement.executeQuery(), t);
     }
 }

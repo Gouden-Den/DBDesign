@@ -6,17 +6,17 @@ public class DeviceInfo {
     String deviceName;
     String typeID;
     String deviceTS;
-    int deviceState;
+    Integer deviceState;
     Date buyDate;
     Date installDate;
     String departmenID;
-    double deviceValue;
+    Double deviceValue;
     String installSite;
     String productFactory;
     Date useDate;
-    int useTime;
-    double salvageValue;
-    double montholdValue;
+    Integer useTime;
+    Double salvageValue;
+    Double montholdValue;
 
     public String getDeviceID() {
         return deviceID;
@@ -50,11 +50,11 @@ public class DeviceInfo {
         this.deviceTS = deviceTS;
     }
 
-    public int getDeviceState() {
+    public Integer getDeviceState() {
         return deviceState;
     }
 
-    public void setDeviceState(int deviceState) {
+    public void setDeviceState(Integer deviceState) {
         this.deviceState = deviceState;
     }
 
@@ -82,11 +82,11 @@ public class DeviceInfo {
         this.departmenID = departmenID;
     }
 
-    public double getDeviceValue() {
+    public Double getDeviceValue() {
         return deviceValue;
     }
 
-    public void setDeviceValue(double deviceValue) {
+    public void setDeviceValue(Double deviceValue) {
         this.deviceValue = deviceValue;
     }
 
@@ -114,27 +114,27 @@ public class DeviceInfo {
         this.useDate = useDate;
     }
 
-    public int getUseTime() {
+    public Integer getUseTime() {
         return useTime;
     }
 
-    public void setUseTime(int useTime) {
+    public void setUseTime(Integer useTime) {
         this.useTime = useTime;
     }
 
-    public double getSalvageValue() {
+    public Double getSalvageValue() {
         return salvageValue;
     }
 
-    public void setSalvageValue(double salvageValue) {
+    public void setSalvageValue(Double salvageValue) {
         this.salvageValue = salvageValue;
     }
 
-    public double getMontholdValue() {
+    public Double getMontholdValue() {
         return montholdValue;
     }
 
-    public void setMontholdValue(double montholdValue) {
+    public void setMontholdValue(Double montholdValue) {
         this.montholdValue = montholdValue;
     }
 }

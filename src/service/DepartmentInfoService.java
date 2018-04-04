@@ -4,9 +4,10 @@ import dao.DepartmentInfoDao;
 import entity.DepartmentInfo;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class DepartmentInfoService {
-    private DepartmentInfoDao departmentInfoDao;
+    private DepartmentInfoDao departmentInfoDao = new DepartmentInfoDao();
 
     public boolean insert(DepartmentInfo departmentInfo) throws SQLException {
         return departmentInfoDao.insert(departmentInfo);
@@ -22,5 +23,15 @@ public class DepartmentInfoService {
 
     public DepartmentInfo getDepartmentInfo(String departmentInfoId) throws SQLException {
         return departmentInfoDao.getDepartmentInfo(departmentInfoId);
+    }
+
+    public List<DepartmentInfo> queryDepartmentInfo() throws Exception {
+        try {
+            String sql = "select * from department_info";
+            return departmentInfoDao.queryAll(sql, null, DepartmentInfo.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

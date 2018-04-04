@@ -6,7 +6,7 @@ import entity.DeviceInfo;
 import java.sql.SQLException;
 
 public class DeviceInfoService {
-    private DeviceInfoDao deviceInfoDao;
+    private DeviceInfoDao deviceInfoDao = new DeviceInfoDao();
 
     public boolean insert(DeviceInfo deviceInfo) throws SQLException {
         return deviceInfoDao.insert(deviceInfo);

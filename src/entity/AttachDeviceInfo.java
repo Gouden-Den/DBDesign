@@ -2,11 +2,11 @@ package entity;
 
 public class AttachDeviceInfo {
     String deviceID;
-    int attachType;
+    Integer attachType;
     String attachDeviceID;
     String attachDeviceName;
-    int attachNum;
-    double attachValue;
+    Integer attachNum;
+    Double attachValue;
 
     public String getDeviceID() {
         return deviceID;
@@ -16,11 +16,11 @@ public class AttachDeviceInfo {
         this.deviceID = deviceID;
     }
 
-    public int getAttachType() {
+    public Integer getAttachType() {
         return attachType;
     }
 
-    public void setAttachType(int attachType) {
+    public void setAttachType(Integer attachType) {
         this.attachType = attachType;
     }
 
@@ -40,19 +40,19 @@ public class AttachDeviceInfo {
         this.attachDeviceName = attachDeviceName;
     }
 
-    public int getAttachNum() {
+    public Integer getAttachNum() {
         return attachNum;
     }
 
-    public void setAttachNum(int attachNum) {
+    public void setAttachNum(Integer attachNum) {
         this.attachNum = attachNum;
     }
 
-    public double getAttachValue() {
+    public Double getAttachValue() {
         return attachValue;
     }
 
-    public void setAttachValue(double attachValue) {
+    public void setAttachValue(Double attachValue) {
         this.attachValue = attachValue;
     }
 }

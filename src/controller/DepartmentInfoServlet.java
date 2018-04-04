@@ -20,7 +20,10 @@ public class DepartmentInfoServlet extends HttpServlet{
             }else if("update".equals(method))
             {
                 update(request,response);
-            }else
+            }else if ("query".equals(method)){
+                query(request, response);
+            }
+            else
             {
 
             }
@@ -62,5 +65,8 @@ public class DepartmentInfoServlet extends HttpServlet{
         {
             e.printStackTrace();
         }
+    }
+    private void query(HttpServletRequest request, HttpServletResponse response){
+
     }
 }

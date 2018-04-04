@@ -5,8 +5,8 @@ public class DepartmentInfo {
     String departmentID;
     String departmentName;
     String departmentManager;
-    int deviceNum;
-    double deviceValue;
+    Integer deviceNum;
+    Double deviceValue;
 
     public String getDepartmentID() {
         return departmentID;
@@ -32,19 +32,19 @@ public class DepartmentInfo {
         this.departmentManager = departmentManager;
     }
 
-    public int getDeviceNum() {
+    public Integer getDeviceNum() {
         return deviceNum;
     }
 
-    public void setDeviceNum(int deviceNum) {
+    public void setDeviceNum(Integer deviceNum) {
         this.deviceNum = deviceNum;
     }
 
-    public double getDeviceValue() {
+    public Double getDeviceValue() {
         return deviceValue;
     }
 
-    public void setDeviceValue(double deviceValue) {
+    public void setDeviceValue(Double deviceValue) {
         this.deviceValue = deviceValue;
     }
 }

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class DeviceTypeService {
     DeviceTypeDao deviceTypeDao=new DeviceTypeDao();
+
     public boolean insert(DeviceType deviceType) throws SQLException{
         return deviceTypeDao.insert(deviceType);
     }
