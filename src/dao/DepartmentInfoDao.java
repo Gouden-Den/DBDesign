@@ -8,25 +8,20 @@ public class DepartmentInfoDao extends BaseDao {
     {
         Connection conn=getConnection();
         try{
-            String sql="insert into department_info(department_id,department_name,department_manager,device_num,device_value) values (?,?,?,?,?)";
+            String sql="insert into department_info(department_id,department_name,department_manager) values (?,?,?)";
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setString(1,departmentInfo.getDepartmentID());
             statement.setString(2,departmentInfo.getDepartmentName());
             statement.setString(3,departmentInfo.getDepartmentManager());
-            statement.setInt(4,departmentInfo.getDeviceNum());
-            statement.setDouble(5,departmentInfo.getDeviceValue());
             int res=statement.executeUpdate();
             conn.commit();
-            if(res>0)
-            {
+            if(res>0) {
                 return true;
             }
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             try{
                 conn.rollback();
-            }catch (Exception e1)
-            {
+            }catch (Exception e1) {
 
             }
         }finally {

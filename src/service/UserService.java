@@ -5,6 +5,7 @@ import entity.User;
 import tools.GenerateTools;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserService {
     private UserDao userDao = new UserDao();
@@ -19,7 +20,7 @@ public class UserService {
     }
 
     public boolean insert(User user) throws SQLException {
-        user.setUserId(GenerateTools.getId());
+        //user.setUserId(GenerateTools.getId());
         return userDao.insert(user);
     }
 
@@ -33,5 +34,15 @@ public class UserService {
 
     public User getUser(String userId) throws SQLException {
         return userDao.getUser(userId);
+    }
+
+    public List<User> queryUserInfo() throws Exception {
+        try {
+            String sql = "select * from table_user";
+            return userDao.queryAll(sql, null, User.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

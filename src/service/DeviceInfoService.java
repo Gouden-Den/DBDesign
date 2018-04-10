@@ -4,6 +4,7 @@ import dao.DeviceInfoDao;
 import entity.DeviceInfo;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class DeviceInfoService {
     private DeviceInfoDao deviceInfoDao = new DeviceInfoDao();
@@ -22,5 +23,25 @@ public class DeviceInfoService {
 
     public DeviceInfo getDeviceInfo(String deviceInfoId) throws SQLException {
         return deviceInfoDao.getDeviceInfo(deviceInfoId);
+    }
+
+    public List<DeviceInfo> queryDeviceInfo() throws Exception {
+        try {
+            String sql = "select * from device_info";
+            return deviceInfoDao.queryAll(sql, null, DeviceInfo.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int getDeviceNum(){
+        try {
+            String sql = "select count(*) from device_info";
+            return deviceInfoDao.getNum(sql);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

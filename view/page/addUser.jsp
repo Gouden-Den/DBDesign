@@ -1,11 +1,18 @@
-<%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %>
-<%@ page import="service.DeviceTypeService" %>
-<%@ page import="service.DeviceInfoService" %>
+<%@ page import="service.RoleService" %>
+<%@ page import="entity.Role" %>
+<%@ page import="java.util.List" %><%--
+  Created by IntelliJ IDEA.
+  User: 泽先
+  Date: 2018/4/10
+  Time: 13:39
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,9 +29,6 @@
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -51,11 +55,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.jsp">
-                <%
-                    out.print(session.getAttribute("userId"));
-                %>
-            </a>
+            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
         </div>
         <!-- /.navbar-header -->
 
@@ -268,7 +268,6 @@
             <!-- /.dropdown -->
         </ul>
         <!-- /.navbar-top-links -->
-        <div class="chs">Collect from <a href="http://www.cssmoban.com/" >网页模板</a></div>
 
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
@@ -285,19 +284,28 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="index.jsp"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
+                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="departmentTables.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 部门信息</a>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="flot.html">Flot Charts</a>
+                            </li>
+                            <li>
+                                <a href="morris.html">Morris.js Charts</a>
+                            </li>
+                        </ul>
+                        <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="deviceTypeInfo.jsp"><i class="fa fa-table fa-fw"></i> 设备类别信息</a>
+                        <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
                     </li>
                     <li>
-                        <a href="deviceInfo.jsp"><i class="fa fa-edit fa-fw"></i> 设备基本信息</a>
+                        <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="panels-wells.html">Panels and Wells</a>
@@ -372,110 +380,58 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">欢迎进入设备管理系统</h1>
+                <h1 class="page-header">Forms</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <%
-            DepartmentInfoService departmentInfoService = new DepartmentInfoService();
-            DeviceTypeService deviceTypeService = new DeviceTypeService();
-            DeviceInfoService deviceInfoService = new DeviceInfoService();
-        %>
         <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-primary">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-comments fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">
-                                    <%=departmentInfoService.getDepartmentNum()%>
-                                </div>
-                                <div>部门信息!</div>
-                            </div>
-                        </div>
+                        Basic Form Elements
                     </div>
-                    <a href="departmentTables.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
+                    <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-tasks fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">
-                                    <%=deviceTypeService.getDeviceTypeNum()%>
-                                </div>
-                                <div>设备类别信息!</div>
+                            <div class="col-lg-6">
+                                <form role="form" action="/user?method=add" method="post">
+                                    <div class="form-group">
+                                        <label>用户Id</label>
+                                        <input name="userId" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>用户名</label>
+                                        <input name="username" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>密码</label>
+                                        <input name="password" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>权限</label>
+                                        <select name="roleId" class="form-control">
+                                            <%
+                                                RoleService roleService = new RoleService();
+                                                List<Role> list = roleService.queryUserInfo();
+                                                for (Role role : list){
+                                                    out.print("<option>" + role.getRoleID() + "|" + role.getRoleName() + "</option>");
+                                                }
+                                            %>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Submit Button</button>
+                                </form>
                             </div>
                         </div>
+                        <!-- /.row (nested) -->
                     </div>
-                    <a href="deviceTypeInfo.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <!-- /.panel-body -->
                 </div>
+                <!-- /.panel -->
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-support fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge"><%=deviceInfoService.getDeviceNum()%></div>
-                                <div>设备基本信息!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="deviceInfo.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-shopping-cart fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">124</div>
-                                <div>申请使用设备!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            <!-- /.col-lg-12 -->
         </div>
+        <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
 
@@ -491,14 +447,10 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- Morris Charts JavaScript -->
-<script src="../vendor/raphael/raphael.min.js"></script>
-<script src="../vendor/morrisjs/morris.min.js"></script>
-<script src="../data/morris-data.js"></script>
-
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 
 </html>
+

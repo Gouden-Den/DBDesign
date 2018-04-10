@@ -6,7 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GenerateTools {
-    private static Calendar calendar;
+    private static Calendar calendar = Calendar.getInstance();
     private static Random random = new Random(33);
 
     static {

@@ -35,4 +35,13 @@ public class BaseDao {
         }
         return ReflectTools.DBReflectTo(statement.executeQuery(), t);
     }
+
+    public int getNum(String sql) throws SQLException {
+        Connection conn = getConnection();
+        ResultSet rs = conn.prepareStatement(sql).executeQuery();
+        if (rs.next()){
+            return rs.getInt(1);
+        }
+        return 0;
+    }
 }

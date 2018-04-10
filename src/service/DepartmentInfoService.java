@@ -34,4 +34,14 @@ public class DepartmentInfoService {
         }
         return null;
     }
+
+    public int getDepartmentNum(){
+        try {
+            String sql = "select count(*) from department_info";
+            return departmentInfoDao.getNum(sql);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -42,7 +42,7 @@
                     <h3 class="panel-title">设备管理系统登陆界面</h3>
                 </div>
                 <div class="panel-body">
-                    <form method="post" action="/userLogin">
+                    <form method="post" action="/user?method=login">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="账号" name="userId" autofocus>
