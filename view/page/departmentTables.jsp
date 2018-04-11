@@ -405,6 +405,7 @@
                                 <th>部门经理</th>
                                 <th>设备数量</th>
                                 <th>设备原值</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <%
@@ -413,11 +414,15 @@
                                 out.print("<tbody>");
                                 for (DepartmentInfo departmentInfo : results){
                                     out.print("<tr class=\"odd gradeX\">\n" +
-                                            "       <td>" + departmentInfo.getDepartmentID() + "</td>\n" +
+                                            "       <td><a href=\"/department?method=get&departmentId="+ departmentInfo.getDepartmentID() +"\">" + departmentInfo.getDepartmentID() + "</a></td>\n" +
                                             "       <td>" + departmentInfo.getDepartmentName() + "</td>\n" +
                                             "       <td>" + departmentInfo.getDepartmentManager() + "</td>\n" +
                                             "       <td class=\"center\">" + departmentInfo.getDeviceNum() + "</td>\n" +
                                             "       <td class=\"center\">" + departmentInfo.getDeviceValue() + "</td>\n" +
+                                            "       <td class=\"center\">" +
+                                            "       <a href=\"/department?method=delete&departmentId=" + departmentInfo.getDepartmentID() + "\">删除</a>&nbsp;&nbsp;" +
+                                            "       <a href=\"/department?method=updateTo&departmentId=" + departmentInfo.getDepartmentID() + "\">修改</a>" +
+                                            "       </td>\n" +
                                             "   </tr>");
                                 }
                                 out.print("</tbody>");

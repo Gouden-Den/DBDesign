@@ -2,7 +2,6 @@ package service;
 
 import dao.UserDao;
 import entity.User;
-import tools.GenerateTools;
 
 import java.sql.SQLException;
 import java.util.List;

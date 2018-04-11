@@ -3,9 +3,13 @@ import entity.DepartmentInfo;
 import service.DepartmentInfoService;
 import tools.GenerateTools;
 import  tools.ReflectTools;
+
+import javax.servlet.ServletException;
 import  javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 public class DepartmentInfoServlet extends HttpServlet{
     DepartmentInfoService departmentInfoService=new DepartmentInfoService();
     public void doGet(HttpServletRequest request,HttpServletResponse response)
@@ -18,9 +22,10 @@ public class DepartmentInfoServlet extends HttpServlet{
                 delete(request,response);
             }else if("update".equals(method)) {
                 update(request,response);
-            } else
-            {
-
+            }else if ("updateTo".equals(method)) {
+                updateTo(request, response);
+            }else if ("get".equals(method)){
+                get(request, response);
             }
         }catch (Exception e)
         {
@@ -55,6 +60,20 @@ public class DepartmentInfoServlet extends HttpServlet{
             DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
             boolean flag=departmentInfoService.update(departmentInfo);
         }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void updateTo(HttpServletRequest request,HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("/page/updateDepartment.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void get(HttpServletRequest request,HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("/page/departmentInfo.jsp").forward(request, response);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

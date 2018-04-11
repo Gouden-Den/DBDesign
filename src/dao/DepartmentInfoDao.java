@@ -75,7 +75,7 @@ public class DepartmentInfoDao extends BaseDao {
     {
         try(Connection conn=getConnection())
         {
-            String sql="select * from device_info where department_id=?";
+            String sql="select * from department_info where department_id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setString(1,departmentid);
             ResultSet res=statement.executeQuery();
