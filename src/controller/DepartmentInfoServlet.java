@@ -40,13 +40,13 @@ public class DepartmentInfoServlet extends HttpServlet{
         try{
             DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
             departmentInfo.setDepartmentID(GenerateTools.getId());
+            departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
             boolean flag=departmentInfoService.insert(departmentInfo);
         }catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private void delete(HttpServletRequest request,HttpServletResponse response)
-    {
+    private void delete(HttpServletRequest request,HttpServletResponse response) {
         try{
             String departmentId=request.getParameter("departmentId");
             boolean flag=departmentInfoService.delete(departmentId);
@@ -54,10 +54,10 @@ public class DepartmentInfoServlet extends HttpServlet{
             e.printStackTrace();
         }
     }
-    private void update(HttpServletRequest request,HttpServletResponse response)
-    {
+    private void update(HttpServletRequest request,HttpServletResponse response) {
         try{
             DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
+            departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
             boolean flag=departmentInfoService.update(departmentInfo);
         }catch (Exception e) {
             e.printStackTrace();

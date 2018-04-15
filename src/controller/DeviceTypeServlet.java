@@ -10,18 +10,16 @@ public class DeviceTypeServlet extends HttpServlet{
     public void doGet(HttpServletRequest request,HttpServletResponse response) {
         try {
             String method=request.getParameter("method");
-            if("add".equals(method))
-            {
+            if("add".equals(method)) {
                 add(request,response);
-            }else if("delete".equals(method))
-            {
+            }else if("delete".equals(method)) {
                 delete(request,response);
-            }else if("update".equals(method))
-            {
+            }else if("update".equals(method)) {
                 update(request,response);
-            }else
-            {
-
+            }else if("updateTo".equals(method)){
+                updateTo(request, response);
+            }else if("get".equals(method)){
+                get(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,6 +56,20 @@ public class DeviceTypeServlet extends HttpServlet{
             boolean flag=deviceTypeService.update(deviceType);
         }catch (Exception e)
         {
+            e.printStackTrace();
+        }
+    }
+    private void updateTo(HttpServletRequest request,HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("/page/updateDeviceType.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void get(HttpServletRequest request,HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("/page/deviceType.jsp").forward(request, response);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -1,14 +1,7 @@
-<%@ page import="service.UserService" %>
-<%@ page import="java.util.List" %>
-<%@ page import="entity.User" %>
 <%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %><%--
-  Created by IntelliJ IDEA.
-  User: 泽先
-  Date: 2018/4/10
-  Time: 13:11
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="service.DepartmentInfoService" %>
+<%@ page import="entity.DeviceType" %>
+<%@ page import="service.DeviceTypeService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,7 +165,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Forms</h1>
+                <h1 class="page-header">部门</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -181,39 +174,38 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Basic Form Elements
+                        类别详细信息
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            <!-- /.col-lg-6 (nested) -->
                             <div class="col-lg-6">
-                                <form role="form" action="/department?method=update" method="post">
-                                    <%
-                                        DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentInfo(request.getParameter("departmentId"));
-                                    %>
-                                    <input type="hidden" name="departmentId" value=<%=departmentInfo.getDepartmentID()%>/>
-                                    <div class="form-group">
-                                        <label>部门名称</label>
-                                        <input name="departmentName" class="form-control" value=<%=departmentInfo.getDepartmentName()%>>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>部门经理</label>
-                                        <select name="departmentManager" class="form-control">
-                                            <%
-                                                UserService userService = new UserService();
-                                                List<User> list = userService.queryUserInfo();
-                                                String id = departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|"));
-                                                for (User user : list){
-                                                    if (user.getUserId().equals(id)){
-                                                        out.print("<option selected=\"selected\">" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                    }
-                                                    out.print("<option>" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                }
-                                            %>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-default">修改</button>
+                                <h1>类别信息</h1>
+                                <form role="form">
+                                    <fieldset disabled>
+                                        <%
+                                            DeviceType deviceType = new DeviceTypeService().getDeviceType(request.getParameter("typeId"));
+                                        %>
+                                        <div class="form-group">
+                                            <label>类别Id</label>
+                                            <input class="form-control" id="departmentId" type="text" value=<%=deviceType.getTypeID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>类别名</label>
+                                            <input class="form-control" id="departmentName" type="text" value=<%=deviceType.getTypeName()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备数量</label>
+                                            <input class="form-control" id="departmentManager" type="text" value=<%=deviceType.getDeviceNum()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备原值</label>
+                                            <input class="form-control" id="departmentNum" type="text" value=<%=deviceType.getDeviceValue()%> disabled>
+                                        </div>
+                                    </fieldset>
                                 </form>
                             </div>
+                            <!-- /.col-lg-6 (nested) -->
                         </div>
                         <!-- /.row (nested) -->
                     </div>
@@ -245,4 +237,3 @@
 </body>
 
 </html>
-

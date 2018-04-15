@@ -1,6 +1,7 @@
 package service;
 import dao.DeviceTypeDao;
 import entity.DeviceType;
+import tools.GenerateTools;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -9,6 +10,7 @@ public class DeviceTypeService {
     DeviceTypeDao deviceTypeDao=new DeviceTypeDao();
 
     public boolean insert(DeviceType deviceType) throws SQLException{
+        deviceType.setTypeID(GenerateTools.getId());
         return deviceTypeDao.insert(deviceType);
     }
     public boolean delete(String typeid) throws SQLException

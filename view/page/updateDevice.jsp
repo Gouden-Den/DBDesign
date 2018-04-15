@@ -1,8 +1,8 @@
 <%@ page import="service.UserService" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entity.User" %>
-<%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %><%--
+<%@ page import="entity.DeviceInfo" %>
+<%@ page import="service.DeviceInfoService" %><%--
   Created by IntelliJ IDEA.
   User: 泽先
   Date: 2018/4/10
@@ -172,7 +172,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Forms</h1>
+                <h1 class="page-header">设备</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -181,35 +181,75 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Basic Form Elements
+                        修改设备信息
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" action="/department?method=update" method="post">
+                                <form role="form" action="/device?method=update" method="post">
                                     <%
-                                        DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentInfo(request.getParameter("departmentId"));
+                                        DeviceInfo deviceInfo=new DeviceInfoService().getDeviceInfo(request.getParameter("deviceID"))
                                     %>
-                                    <input type="hidden" name="departmentId" value=<%=departmentInfo.getDepartmentID()%>/>
+                                    <input type="hidden" name="deviceID" value=<%=deviceInfo.getDeviceID()%>/>
                                     <div class="form-group">
-                                        <label>部门名称</label>
-                                        <input name="departmentName" class="form-control" value=<%=departmentInfo.getDepartmentName()%>>
+                                        <label>设备id</label>
+                                        <input name="deviceID" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label>部门经理</label>
-                                        <select name="departmentManager" class="form-control">
-                                            <%
-                                                UserService userService = new UserService();
-                                                List<User> list = userService.queryUserInfo();
-                                                String id = departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|"));
-                                                for (User user : list){
-                                                    if (user.getUserId().equals(id)){
-                                                        out.print("<option selected=\"selected\">" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                    }
-                                                    out.print("<option>" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                }
-                                            %>
-                                        </select>
+                                        <label>设备名</label>
+                                        <input name="deviceName" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>类别id</label>
+                                        <input name="typeID" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备TS</label>
+                                        <input name="deviceTS" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备状态</label>
+                                        <input name="deviceState" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>购买日期</label>
+                                        <input name="buyDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>安装日期</label>
+                                        <input name="installDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>部门ID</label>
+                                        <input name="departmenID" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备原值</label>
+                                        <input name="deviceValue" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>安装地点</label>
+                                        <input name="installSite" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>生产厂家</label>
+                                        <input name="productFactory" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>使用日期</label>
+                                        <input name="useDate" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>使用时间</label>
+                                        <input name="useTime" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>残值</label>
+                                        <input name="salvageValue" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>折旧金额</label>
+                                        <input name="montholdValue" class="form-control">
                                     </div>
                                     <button type="submit" class="btn btn-default">修改</button>
                                 </form>
@@ -245,4 +285,3 @@
 </body>
 
 </html>
-

@@ -186,30 +186,24 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" action="/department?method=update" method="post">
+                                <form role="form" action="/user?method=update" method="post">
                                     <%
-                                        DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentInfo(request.getParameter("departmentId"));
+                                        User userInfo = new UserService().getUser(request.getParameter("userId"));
                                     %>
-                                    <input type="hidden" name="departmentId" value=<%=departmentInfo.getDepartmentID()%>/>
+                                    <input type="hidden" name="departmentId" value=<%=userInfo.getUserId()%>/>
                                     <div class="form-group">
-                                        <label>部门名称</label>
-                                        <input name="departmentName" class="form-control" value=<%=departmentInfo.getDepartmentName()%>>
+                                        <label>用户名</label>
+                                        <input name="username" class="form-control" value=<%=userInfo.getUsername()%>>
+                                    </div>
+                                    <input type="hidden" name="roleId" value=<%=userInfo.getRoleId()%>>
+                                    <div class="form-group">
+                                        <label>用户密码</label>
+                                        <input type="password" id="password" name="password" class="form-control" value=<%=userInfo.getPassword()%>>
                                     </div>
                                     <div class="form-group">
-                                        <label>部门经理</label>
-                                        <select name="departmentManager" class="form-control">
-                                            <%
-                                                UserService userService = new UserService();
-                                                List<User> list = userService.queryUserInfo();
-                                                String id = departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|"));
-                                                for (User user : list){
-                                                    if (user.getUserId().equals(id)){
-                                                        out.print("<option selected=\"selected\">" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                    }
-                                                    out.print("<option>" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                }
-                                            %>
-                                        </select>
+                                        <label>确认密码</label>
+                                        <input type="password" id="otherPassword" onkeyup="if(document.getElementById('password').value != document.getElementById('otherPassword').value){document.getElementById('tips').value('密码和确认密码不一致')}" class="form-control" value=<%=userInfo.getPassword()%>>
+                                        <p id="tips" style="color: red"></p>
                                     </div>
                                     <button type="submit" class="btn btn-default">修改</button>
                                 </form>

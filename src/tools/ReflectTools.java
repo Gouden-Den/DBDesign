@@ -1,6 +1,5 @@
 package tools;
 
-import dao.BaseDao;
 import dao.UserDao;
 import entity.User;
 import org.junit.Test;
@@ -8,6 +7,8 @@ import org.junit.Test;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,19 @@ public class ReflectTools {
     public static <T> T ReflectTo(HttpServletRequest request, Class<T> t) throws Exception {
         T t1 = t.newInstance();
         Field [] fields = t.getDeclaredFields();
+        String param;
         for (Field field : fields){
+            param = request.getParameter(field.getName());
             Method method = t.getMethod("set" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1), field.getType());
-            method.invoke(t1, request.getParameter(field.getName()));
+            if (field.getType().equals(String.class)){
+                method.invoke(t1, param);
+            }if (field.getType().equals(Integer.class)){
+                method.invoke(t1, Integer.valueOf(param));
+            }else if (field.getType().equals(Double.class)){
+                method.invoke(t1, Double.valueOf(param));
+            }else if (field.getType().equals(Date.class)){
+                method.invoke(t1, Date.valueOf(param));
+            }
         }
         return t1;
     }

@@ -1,6 +1,5 @@
 package entity;
-import java.sql.*;
-import java.awt.*;
+import java.sql.Date;
 public class DeviceInfo {
     String deviceID;
     String deviceName;
@@ -9,7 +8,7 @@ public class DeviceInfo {
     Integer deviceState;
     Date buyDate;
     Date installDate;
-    String departmenID;
+    String departmentID;
     Double deviceValue;
     String installSite;
     String productFactory;
@@ -74,12 +73,12 @@ public class DeviceInfo {
         this.installDate = installDate;
     }
 
-    public String getDepartmenID() {
-        return departmenID;
+    public String getDepartmentID() {
+        return departmentID;
     }
 
-    public void setDepartmenID(String departmenID) {
-        this.departmenID = departmenID;
+    public void setDepartmentID(String departmenID) {
+        this.departmentID = departmenID;
     }
 
     public Double getDeviceValue() {

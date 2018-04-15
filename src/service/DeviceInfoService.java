@@ -2,6 +2,7 @@ package service;
 
 import dao.DeviceInfoDao;
 import entity.DeviceInfo;
+import tools.GenerateTools;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,6 +11,8 @@ public class DeviceInfoService {
     private DeviceInfoDao deviceInfoDao = new DeviceInfoDao();
 
     public boolean insert(DeviceInfo deviceInfo) throws SQLException {
+        deviceInfo.setDeviceID(GenerateTools.getId());
+        deviceInfo.setTypeID(deviceInfo.getTypeID().split("\\|")[0]);
         return deviceInfoDao.insert(deviceInfo);
     }
 

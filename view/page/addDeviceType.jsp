@@ -1,12 +1,10 @@
-<%@ page import="service.UserService" %>
-<%@ page import="java.util.List" %>
-<%@ page import="entity.User" %>
-<%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %><%--
+<%@ page import="service.DeviceTypeService" %>
+<%@ page import="entity.DeviceType" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: 泽先
   Date: 2018/4/10
-  Time: 13:11
+  Time: 13:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -186,32 +184,20 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" action="/department?method=update" method="post">
-                                    <%
-                                        DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentInfo(request.getParameter("departmentId"));
-                                    %>
-                                    <input type="hidden" name="departmentId" value=<%=departmentInfo.getDepartmentID()%>/>
+                                <form role="form" action="/deviceType?method=add" method="post">
                                     <div class="form-group">
-                                        <label>部门名称</label>
-                                        <input name="departmentName" class="form-control" value=<%=departmentInfo.getDepartmentName()%>>
+                                        <label>设备类别名</label>
+                                        <input name="typeName" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label>部门经理</label>
-                                        <select name="departmentManager" class="form-control">
-                                            <%
-                                                UserService userService = new UserService();
-                                                List<User> list = userService.queryUserInfo();
-                                                String id = departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|"));
-                                                for (User user : list){
-                                                    if (user.getUserId().equals(id)){
-                                                        out.print("<option selected=\"selected\">" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                    }
-                                                    out.print("<option>" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                }
-                                            %>
-                                        </select>
+                                        <label>设备数量</label>
+                                        <input name="deviceNum" class="form-control">
                                     </div>
-                                    <button type="submit" class="btn btn-default">修改</button>
+                                    <div class="form-group">
+                                        <label>设备原值</label>
+                                        <input name="deviceValue" class="form-control">
+                                    </div>
+                                    <button type="submit" class="btn btn-default">提交</button>
                                 </form>
                             </div>
                         </div>

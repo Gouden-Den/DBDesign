@@ -1,14 +1,9 @@
-<%@ page import="service.UserService" %>
-<%@ page import="java.util.List" %>
-<%@ page import="entity.User" %>
 <%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %><%--
-  Created by IntelliJ IDEA.
-  User: 泽先
-  Date: 2018/4/10
-  Time: 13:11
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="service.DepartmentInfoService" %>
+<%@ page import="entity.DeviceType" %>
+<%@ page import="service.DeviceTypeService" %>
+<%@ page import="entity.DeviceInfo" %>
+<%@ page import="service.DeviceInfoService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,7 +167,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Forms</h1>
+                <h1 class="page-header">部门</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -181,39 +176,82 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Basic Form Elements
+                        类别详细信息
                     </div>
                     <div class="panel-body">
                         <div class="row">
+                            <!-- /.col-lg-6 (nested) -->
                             <div class="col-lg-6">
-                                <form role="form" action="/department?method=update" method="post">
-                                    <%
-                                        DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentInfo(request.getParameter("departmentId"));
-                                    %>
-                                    <input type="hidden" name="departmentId" value=<%=departmentInfo.getDepartmentID()%>/>
-                                    <div class="form-group">
-                                        <label>部门名称</label>
-                                        <input name="departmentName" class="form-control" value=<%=departmentInfo.getDepartmentName()%>>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>部门经理</label>
-                                        <select name="departmentManager" class="form-control">
-                                            <%
-                                                UserService userService = new UserService();
-                                                List<User> list = userService.queryUserInfo();
-                                                String id = departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|"));
-                                                for (User user : list){
-                                                    if (user.getUserId().equals(id)){
-                                                        out.print("<option selected=\"selected\">" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                    }
-                                                    out.print("<option>" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                }
-                                            %>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-default">修改</button>
+                                <h1>类别信息</h1>
+                                <form role="form">
+                                    <fieldset disabled>
+                                        <%
+                                            DeviceInfo deviceInfo = new DeviceInfoService().getDeviceInfo(request.getParameter("deviceId"));
+                                        %>
+                                        <div class="form-group">
+                                            <label>设备Id</label>
+                                            <input class="form-control" id="deviceID" type="text" value=<%=deviceInfo.getDeviceID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备名</label>
+                                            <input class="form-control" id="deviceName" type="text" value=<%=deviceInfo.getDeviceName()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>类型Id</label>
+                                            <input class="form-control" id="typeID" type="text" value=<%=deviceInfo.getTypeID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>型号规格</label>
+                                            <input class="form-control" id="deviceTS" type="text" value=<%=deviceInfo.getDeviceTS()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备状态</label>
+                                            <input class="form-control" id="deviceState" type="text" value=<%=deviceInfo.getDeviceState()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>购买日期</label>
+                                            <input class="form-control" id="buyDate" type="text" value=<%=deviceInfo.getBuyDate()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>安装日期</label>
+                                            <input class="form-control" id="installDate" type="text" value=<%=deviceInfo.getDeviceTS()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>部门Id</label>
+                                            <input class="form-control" id="departmentID" type="text" value=<%=deviceInfo.getDepartmentID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备原值</label>
+                                            <input class="form-control" id="deviceValue" type="text" value=<%=deviceInfo.getDeviceValue()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>安装地点</label>
+                                            <input class="form-control" id="installSite" type="text" value=<%=deviceInfo.getInstallSite()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>生产厂家</label>
+                                            <input class="form-control" id="productFactory" type="text" value=<%=deviceInfo.getProductFactory()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>使用日期</label>
+                                            <input class="form-control" id="useDate" type="text" value=<%=deviceInfo.getUseDate()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>使用次数</label>
+                                            <input class="form-control" id="useTime" type="text" value=<%=deviceInfo.getUseTime()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>残值</label>
+                                            <input class="form-control" id="salvageValue" type="text" value=<%=deviceInfo.getSalvageValue()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>月折旧金额</label>
+                                            <input class="form-control" id="montholdValue" type="text" value=<%=deviceInfo.getMontholdValue()%> disabled>
+                                        </div>
+                                    </fieldset>
                                 </form>
                             </div>
+                            <!-- /.col-lg-6 (nested) -->
                         </div>
                         <!-- /.row (nested) -->
                     </div>
@@ -245,4 +283,3 @@
 </body>
 
 </html>
-

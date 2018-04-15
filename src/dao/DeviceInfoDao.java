@@ -16,7 +16,7 @@ public class DeviceInfoDao extends BaseDao {
             statement.setInt(5,deviceInfo.getDeviceState());
             statement.setDate(6,deviceInfo.getBuyDate());
             statement.setDate(7,deviceInfo.getInstallDate());
-            statement.setString(8,deviceInfo.getDepartmenID());
+            statement.setString(8,deviceInfo.getDepartmentID());
             statement.setDouble(9,deviceInfo.getDeviceValue());
             statement.setString(10,deviceInfo.getInstallSite());
             statement.setString(11,deviceInfo.getProductFactory());
@@ -32,6 +32,7 @@ public class DeviceInfoDao extends BaseDao {
             }
         }catch (Exception e)
         {
+            e.printStackTrace();
             try{
                 conn.rollback();
             }catch (Exception e1)
@@ -74,7 +75,7 @@ public class DeviceInfoDao extends BaseDao {
             statement.setInt(5,deviceInfo.getDeviceState());
             statement.setDate(6,deviceInfo.getBuyDate());
             statement.setDate(7,deviceInfo.getInstallDate());
-            statement.setString(8,deviceInfo.getDepartmenID());
+            statement.setString(8,deviceInfo.getDepartmentID() == null ? "" : deviceInfo.getDepartmentID());
             statement.setDouble(9,deviceInfo.getDeviceValue());
             statement.setString(10,deviceInfo.getInstallSite());
             statement.setString(11,deviceInfo.getProductFactory());
@@ -103,8 +104,7 @@ public class DeviceInfoDao extends BaseDao {
             statement.setString(1,deviceid);
             ResultSet res=statement.executeQuery();
             DeviceInfo deviceInfo=new DeviceInfo();
-            if(res.next())
-            {
+            if(res.next()){
                deviceInfo.setDeviceID(res.getString(1));
                deviceInfo.setDeviceName(res.getString(2));
                deviceInfo.setTypeID(res.getString(3));
@@ -112,7 +112,7 @@ public class DeviceInfoDao extends BaseDao {
                deviceInfo.setDeviceState(res.getInt(5));
                deviceInfo.setBuyDate(res.getDate(6));
                deviceInfo.setInstallDate(res.getDate(7));
-               deviceInfo.setDepartmenID(res.getString(8));
+               deviceInfo.setDepartmentID(res.getString(8));
                deviceInfo.setDeviceValue(res.getDouble(9));
                deviceInfo.setInstallDate(res.getDate(10));
                deviceInfo.setProductFactory(res.getString(11));

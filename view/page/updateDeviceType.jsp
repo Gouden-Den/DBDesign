@@ -1,8 +1,9 @@
 <%@ page import="service.UserService" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entity.User" %>
-<%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %><%--
+<%@ page import="entity.DeviceType" %>
+<%@ page import="service.DeviceTypeService" %>
+<%@ page import="entity.DeviceType" %><%--
   Created by IntelliJ IDEA.
   User: 泽先
   Date: 2018/4/10
@@ -186,30 +187,26 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" action="/department?method=update" method="post">
+                                <form role="form" action="/deviceType?method=update" method="post">
                                     <%
-                                        DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentInfo(request.getParameter("departmentId"));
+                                        DeviceType deviceType=new DeviceTypeService().getDeviceType(request.getParameter("typeId"));
                                     %>
-                                    <input type="hidden" name="departmentId" value=<%=departmentInfo.getDepartmentID()%>/>
+                                    <input type="hidden" name="typeID" value=<%=deviceType.getTypeID()%>>
                                     <div class="form-group">
-                                        <label>部门名称</label>
-                                        <input name="departmentName" class="form-control" value=<%=departmentInfo.getDepartmentName()%>>
+                                        <label>类别id</label>
+                                        <input name="typeID" class="form-control" value=<%=deviceType.getTypeID()%> disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label>部门经理</label>
-                                        <select name="departmentManager" class="form-control">
-                                            <%
-                                                UserService userService = new UserService();
-                                                List<User> list = userService.queryUserInfo();
-                                                String id = departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|"));
-                                                for (User user : list){
-                                                    if (user.getUserId().equals(id)){
-                                                        out.print("<option selected=\"selected\">" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                    }
-                                                    out.print("<option>" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                }
-                                            %>
-                                        </select>
+                                        <label>设备名</label>
+                                        <input name="typeName" class="form-control" value=<%=deviceType.getTypeName()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备数量</label>
+                                        <input name="deviceNum" class="form-control" value=<%=deviceType.getDeviceNum()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备原值</label>
+                                        <input name="deviceValue" class="form-control" value=<%=deviceType.getDeviceValue()%>>
                                     </div>
                                     <button type="submit" class="btn btn-default">修改</button>
                                 </form>
@@ -245,4 +242,3 @@
 </body>
 
 </html>
-

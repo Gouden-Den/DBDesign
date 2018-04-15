@@ -1,5 +1,4 @@
 package entity;
-import java.sql.*;
 public class DeviceType {
     String typeID;
     String typeName;
