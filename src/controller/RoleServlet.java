@@ -57,4 +57,10 @@ public class RoleServlet extends HttpServlet{
             e.printStackTrace();
         }
     }
+    private void updateTo(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/updateDevice.jsp").forward(request, response);
+    }
+    private void get(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/device.jsp").forward(request, response);
+    }
 }

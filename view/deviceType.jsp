@@ -1,6 +1,7 @@
-<%@ page import="service.DepartmentInfoService" %>
-<%@ page import="java.util.List" %>
 <%@ page import="entity.DepartmentInfo" %>
+<%@ page import="service.DepartmentInfoService" %>
+<%@ page import="entity.DeviceType" %>
+<%@ page import="service.DeviceTypeService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,25 +132,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -164,7 +153,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">部门信息</h1>
+                <h1 class="page-header">部门</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -173,41 +162,40 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        部门信息
+                        类别详细信息
                     </div>
-                    <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                            <tr>
-                                <th>部门ID</th>
-                                <th>部门名称</th>
-                                <th>部门经理</th>
-                                <th>设备数量</th>
-                                <th>设备原值</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <%
-                                DepartmentInfoService departmentInfoService = new DepartmentInfoService();
-                                List<DepartmentInfo> results = departmentInfoService.queryDepartmentInfo();
-                                out.print("<tbody>");
-                                for (DepartmentInfo departmentInfo : results){
-                                    out.print("<tr class=\"odd gradeX\">\n" +
-                                            "       <td><a href=\"/department?method=get&departmentId="+ departmentInfo.getDepartmentID() +"\">" + departmentInfo.getDepartmentID() + "</a></td>\n" +
-                                            "       <td>" + departmentInfo.getDepartmentName() + "</td>\n" +
-                                            "       <td>" + departmentInfo.getDepartmentManager() + "</td>\n" +
-                                            "       <td class=\"center\">" + departmentInfo.getDeviceNum() + "</td>\n" +
-                                            "       <td class=\"center\">" + departmentInfo.getDeviceValue() + "</td>\n" +
-                                            "       <td class=\"center\">" +
-                                            "       <a href=\"/department?method=delete&departmentId=" + departmentInfo.getDepartmentID() + "\">删除</a>&nbsp;&nbsp;" +
-                                            "       <a href=\"/department?method=updateTo&departmentId=" + departmentInfo.getDepartmentID() + "\">修改</a>" +
-                                            "       </td>\n" +
-                                            "   </tr>");
-                                }
-                                out.print("</tbody>");
-                            %>
-                        </table>
+                        <div class="row">
+                            <!-- /.col-lg-6 (nested) -->
+                            <div class="col-lg-6">
+                                <h1>类别信息</h1>
+                                <form role="form">
+                                    <fieldset disabled>
+                                        <%
+                                            DeviceType deviceType = new DeviceTypeService().getDeviceType(request.getParameter("typeId"));
+                                        %>
+                                        <div class="form-group">
+                                            <label>类别Id</label>
+                                            <input class="form-control" id="departmentId" type="text" value=<%=deviceType.getTypeID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>类别名</label>
+                                            <input class="form-control" id="departmentName" type="text" value=<%=deviceType.getTypeName()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备数量</label>
+                                            <input class="form-control" id="departmentManager" type="text" value=<%=deviceType.getDeviceNum()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备原值</label>
+                                            <input class="form-control" id="departmentNum" type="text" value=<%=deviceType.getDeviceValue()%> disabled>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        <!-- /.row (nested) -->
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -215,6 +203,7 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
 
@@ -230,22 +219,8 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- DataTables JavaScript -->
-<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
-
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-</script>
 
 </body>
 

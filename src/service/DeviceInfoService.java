@@ -41,7 +41,7 @@ public class DeviceInfoService {
     public int getDeviceNum(){
         try {
             String sql = "select count(*) from device_info";
-            return deviceInfoDao.getNum(sql);
+            return deviceInfoDao.getNum(sql, null);
         }catch (Exception e){
             e.printStackTrace();
         }

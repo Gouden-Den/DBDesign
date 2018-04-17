@@ -42,9 +42,9 @@ public class UserServlet extends HttpServlet{
             User user =  userService.login(request.getParameter("userId"), request.getParameter("password"));
             if (user != null){
                 request.getSession().setAttribute("userId", user.getUserId());
-                response.sendRedirect("/page/index.jsp");
+                response.sendRedirect("/index.jsp");
             }else {
-                response.sendRedirect("/page/login.jsp?tips=1");
+                response.sendRedirect("/login.jsp?tips=1");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,21 +60,22 @@ public class UserServlet extends HttpServlet{
         }
     }
 
-    private void delete(HttpServletRequest request, HttpServletResponse response){
-        try {
-            String userId = request.getParameter("userId");
-            boolean flag = userService.delete(userId);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    private void delete(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        String userId = request.getParameter("userId");
+        userService.delete(userId);
+        response.sendRedirect("/deviceTypeInfo.jsp");
     }
 
-    private void update(HttpServletRequest request, HttpServletResponse response){
-        try {
-            User user = ReflectTools.ReflectTo(request, User.class);
-            boolean flag = userService.update(user);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    private void update(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        User user = ReflectTools.ReflectTo(request, User.class);
+        userService.update(user);
+        response.sendRedirect("/deviceTypeInfo.jsp");
+    }
+
+    private void updateTo(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/updateDeviceType.jsp").forward(request, response);
+    }
+    private void get(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/device.jsp").forward(request, response);
     }
 }

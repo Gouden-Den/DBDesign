@@ -29,48 +29,28 @@ public class DeviceTypeServlet extends HttpServlet{
     {
         doGet(request,response);
     }
-    private void add(HttpServletRequest request,HttpServletResponse response)
+    private void add(HttpServletRequest request,HttpServletResponse response) throws Exception
     {
-        try{
-            DeviceType deviceType=ReflectTools.ReflectTo(request,DeviceType.class);
-            boolean flag=deviceTypeService.insert(deviceType);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        DeviceType deviceType=ReflectTools.ReflectTo(request,DeviceType.class);
+        deviceTypeService.insert(deviceType);
+        response.sendRedirect("/deviceTypeInfo.jsp");
     }
-    private void delete(HttpServletRequest request,HttpServletResponse response)
+    private void delete(HttpServletRequest request,HttpServletResponse response) throws Exception
     {
-        try{
-            String typeId=request.getParameter("typeId");
-            boolean flag=deviceTypeService.delete(typeId);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        String typeId=request.getParameter("typeId");
+        deviceTypeService.delete(typeId);
+        response.sendRedirect("/deviceTypeInfo.jsp");
     }
-    private void update(HttpServletRequest request,HttpServletResponse response)
+    private void update(HttpServletRequest request,HttpServletResponse response) throws Exception
     {
-        try{
-            DeviceType deviceType=ReflectTools.ReflectTo(request,DeviceType.class);
-            boolean flag=deviceTypeService.update(deviceType);
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+        DeviceType deviceType=ReflectTools.ReflectTo(request,DeviceType.class);
+        deviceTypeService.update(deviceType);
+        response.sendRedirect("/deviceTypeInfo.jsp");
     }
-    private void updateTo(HttpServletRequest request,HttpServletResponse response) {
-        try {
-            request.getRequestDispatcher("/page/updateDeviceType.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void updateTo(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/updateDeviceType.jsp").forward(request, response);
     }
-    private void get(HttpServletRequest request,HttpServletResponse response) {
-        try {
-            request.getRequestDispatcher("/page/deviceType.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void get(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/deviceType.jsp").forward(request, response);
     }
 }

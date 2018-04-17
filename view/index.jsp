@@ -1,12 +1,9 @@
+<%@ page import="entity.DepartmentInfo" %>
+<%@ page import="service.DepartmentInfoService" %>
 <%@ page import="service.DeviceTypeService" %>
-<%@ page import="entity.DeviceType" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: 泽先
-  Date: 2018/4/10
-  Time: 13:39
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="service.DeviceInfoService" %>
+<%@ page import="entity.RequestUse" %>
+<%@ page import="service.RequestUseService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -137,25 +134,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -170,46 +155,114 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Forms</h1>
+                <h1 class="page-header">欢迎进入设备管理系统</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
+        <%
+            DepartmentInfoService departmentInfoService = new DepartmentInfoService();
+            DeviceTypeService deviceTypeService = new DeviceTypeService();
+            DeviceInfoService deviceInfoService = new DeviceInfoService();
+            RequestUseService requestUseService = new RequestUseService();
+        %>
         <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
-                        Basic Form Elements
-                    </div>
-                    <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6">
-                                <form role="form" action="/deviceType?method=add" method="post">
-                                    <div class="form-group">
-                                        <label>设备类别名</label>
-                                        <input name="typeName" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>设备数量</label>
-                                        <input name="deviceNum" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>设备原值</label>
-                                        <input name="deviceValue" class="form-control">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">提交</button>
-                                </form>
+                            <div class="col-xs-3">
+                                <i class="fa fa-comments fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">
+                                    <%=departmentInfoService.getDepartmentNum()%>
+                                </div>
+                                <div>部门信息!</div>
                             </div>
                         </div>
-                        <!-- /.row (nested) -->
                     </div>
-                    <!-- /.panel-body -->
+                    <a href="departmentTables.jsp">
+                        <div class="panel-footer">
+                            <span class="pull-left">详情</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
                 </div>
-                <!-- /.panel -->
             </div>
-            <!-- /.col-lg-12 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-green">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-tasks fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">
+                                    <%=deviceTypeService.getDeviceTypeNum()%>
+                                </div>
+                                <div>设备类别信息!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="deviceTypeInfo.jsp">
+                        <div class="panel-footer">
+                            <span class="pull-left">详情</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-red">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-support fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"><%=deviceInfoService.getDeviceNum()%></div>
+                                <div>设备基本信息!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="deviceInfo.jsp">
+                        <div class="panel-footer">
+                            <span class="pull-left">详情</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-yellow">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-shopping-cart fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <%
+                                    DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentByManager((String) session.getAttribute("userId"));
+                                %>
+                                <div class="huge"><%=requestUseService.queryRequestUse(departmentInfo == null ? null : departmentInfo.getDepartmentID(), 0).size()%></div>
+                                <div>申请使用设备!</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="requestUseInfo.jsp">
+                        <div class="panel-footer">
+                            <span class="pull-left">详情</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
 
@@ -225,10 +278,14 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
+<!-- Morris Charts JavaScript -->
+<script src="../vendor/raphael/raphael.min.js"></script>
+<script src="../vendor/morrisjs/morris.min.js"></script>
+<script src="../data/morris-data.js"></script>
+
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 
 </html>
-

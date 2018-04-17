@@ -92,6 +92,5 @@ public class DeviceTypeDao extends BaseDao {
             }
             return deviceType;
         }
-
     }
 }

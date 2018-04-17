@@ -1,8 +1,15 @@
-<%@ page import="service.DepartmentInfoService" %>
+<%@ page import="service.UserService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DeviceTypeService" %>
+<%@ page import="entity.User" %>
 <%@ page import="entity.DeviceType" %>
+<%@ page import="service.DeviceTypeService" %>
+<%@ page import="entity.DeviceType" %><%--
+  Created by IntelliJ IDEA.
+  User: 泽先
+  Date: 2018/4/10
+  Time: 13:11
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,25 +140,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -166,7 +161,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">设备基本信息</h1>
+                <h1 class="page-header">Forms</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -175,38 +170,45 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        设备基本信息
+                        Basic Form Elements
                     </div>
-                    <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                            <tr>
-                                <th>类别编号</th>
-                                <th>类别名称</th>
-                                <th>设备台数</th>
-                                <th>设备原值</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <%
-                                DeviceTypeService deviceTypeService = new DeviceTypeService();
-                                List<DeviceType> results = deviceTypeService.queryDeviceTypeInfo();
-                                out.print("<tbody>");
-                                for (DeviceType deviceType : results){
-                                    out.print("<tr class=\"odd gradeX\">\n" +
-                                            "       <td><a href=\"/deviceType?method=get&typeId=" + deviceType.getTypeID() + "\">" + deviceType.getTypeID() + "</a></td>\n" +
-                                            "       <td>" + deviceType.getTypeName() + "</td>\n" +
-                                            "       <td>" + deviceType.getDeviceNum() + "</td>\n" +
-                                            "       <td class=\"center\">" + deviceType.getDeviceValue() + "</td>\n" +
-                                            "       <td><a href=\"/deviceType?method=delete&typeId=" + deviceType.getTypeID() + "\">删除</a>&nbsp;&nbsp;" +
-                                            "       <a href=\"/deviceType?method=updateTo&typeId=" + deviceType.getTypeID() + "\">修改</a></td>" +
-                                            "       " +
-                                            "   </tr>");
-                                }
-                                out.print("</tbody>");
-                            %>
-                        </table>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <form role="form" action="/deviceType?method=update" method="post">
+                                    <%
+                                        DeviceType deviceType=new DeviceTypeService().getDeviceType(request.getParameter("typeId"));
+                                    %>
+                                    <input type="hidden" name="typeID" value=<%=deviceType.getTypeID()%>>
+                                    <div class="form-group">
+                                        <label>类别id</label>
+                                        <input name="typeID" class="form-control" value=<%=deviceType.getTypeID()%> <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="requestUseInfo.jsp">待批准</a>
+                            </li>
+                            <li>
+                                <a href="usingInfo.jsp">已批准</a>
+                            </li>
+                        </ul>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备名</label>
+                                        <input name="typeName" class="form-control" value=<%=deviceType.getTypeName()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备数量</label>
+                                        <input name="deviceNum" class="form-control" value=<%=deviceType.getDeviceNum()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备原值</label>
+                                        <input name="deviceValue" class="form-control" value=<%=deviceType.getDeviceValue()%>>
+                                    </div>
+                                    <button type="submit" class="btn btn-default">修改</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.row (nested) -->
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -214,6 +216,7 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
 
@@ -229,22 +232,8 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- DataTables JavaScript -->
-<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
-
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-</script>
 
 </body>
 

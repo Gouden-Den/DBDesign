@@ -27,54 +27,49 @@ public class DepartmentInfoServlet extends HttpServlet{
             }else if ("get".equals(method)){
                 get(request, response);
             }
-        }catch (Exception e)
-        {
+        }catch (Exception e) {
             e.printStackTrace();
+            try {
+                request.getRequestDispatcher("/error.jsp").forward(request, response);
+            }catch (Exception e1){
+            }
         }
     }
     public void doPost(HttpServletRequest request,HttpServletResponse response)
     {
         doGet(request,response);
     }
-    private void add(HttpServletRequest request,HttpServletResponse response) {
-        try{
-            DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
-            departmentInfo.setDepartmentID(GenerateTools.getId());
-            departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
-            boolean flag=departmentInfoService.insert(departmentInfo);
-        }catch (Exception e) {
-            e.printStackTrace();
+    private void add(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
+        departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
+        if (departmentInfoService.getDepartmentByManager(departmentInfo.getDepartmentManager()) != null){
+            request.setAttribute("message", "该用户已是部门经理");
+            throw new Exception();
         }
+        departmentInfo.setDepartmentID(GenerateTools.getId());
+        departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
+        departmentInfoService.insert(departmentInfo);
+        response.sendRedirect("/departmentTables.jsp");
     }
-    private void delete(HttpServletRequest request,HttpServletResponse response) {
-        try{
-            String departmentId=request.getParameter("departmentId");
-            boolean flag=departmentInfoService.delete(departmentId);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void delete(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        String departmentId=request.getParameter("departmentId");
+        departmentInfoService.delete(departmentId);
+        response.sendRedirect("/departmentTables.jsp");
     }
-    private void update(HttpServletRequest request,HttpServletResponse response) {
-        try{
-            DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
-            departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
-            boolean flag=departmentInfoService.update(departmentInfo);
-        }catch (Exception e) {
-            e.printStackTrace();
+    private void update(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
+        if (departmentInfoService.getDepartmentByManager(departmentInfo.getDepartmentManager()) != null){
+            request.setAttribute("message", "该用户已是部门经理");
+            throw new Exception();
         }
+        departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager());
+        departmentInfoService.update(departmentInfo);
+        response.sendRedirect("/departmentTables.jsp");
     }
-    private void updateTo(HttpServletRequest request,HttpServletResponse response) {
-        try {
-            request.getRequestDispatcher("/page/updateDepartment.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void updateTo(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/updateDepartment.jsp").forward(request, response);
     }
-    private void get(HttpServletRequest request,HttpServletResponse response) {
-        try {
-            request.getRequestDispatcher("/page/departmentInfo.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void get(HttpServletRequest request,HttpServletResponse response) throws Exception{
+        request.getRequestDispatcher("/departmentInfo.jsp").forward(request, response);
     }
 }

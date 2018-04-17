@@ -36,9 +36,24 @@ public class BaseDao {
         return ReflectTools.DBReflectTo(statement.executeQuery(), t);
     }
 
-    public int getNum(String sql) throws SQLException {
+    public int updateAll(String sql, Object [] params) throws Exception{
         Connection conn = getConnection();
-        ResultSet rs = conn.prepareStatement(sql).executeQuery();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        if (params != null){
+            for (int i = 0; i < params.length; i++){
+                statement.setObject(i + 1, params[i]);
+            }
+        }
+        return statement.executeUpdate();
+    }
+
+    public int getNum(String sql, String userId) throws SQLException {
+        Connection conn = getConnection();
+        PreparedStatement statement = conn.prepareStatement(sql);
+        if (userId != null){
+            statement.setString(1, userId);
+        }
+        ResultSet rs = statement.executeQuery();
         if (rs.next()){
             return rs.getInt(1);
         }

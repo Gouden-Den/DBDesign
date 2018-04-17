@@ -38,10 +38,31 @@ public class DepartmentInfoService {
     public int getDepartmentNum(){
         try {
             String sql = "select count(*) from department_info";
-            return departmentInfoDao.getNum(sql);
+            return departmentInfoDao.getNum(sql, null);
         }catch (Exception e){
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public boolean isDepartmentManager(String userId){
+        try {
+            String sql = "select count(*) from department_info where department_manager=?";
+            return departmentInfoDao.getNum(sql, userId) > 0;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public DepartmentInfo getDepartmentByManager(String userId){
+        try {
+            String sql = "select * from department_info where department_manager=?";
+            List<DepartmentInfo> list = departmentInfoDao.queryAll(sql, new Object[]{userId}, DepartmentInfo.class);
+            return list.size() == 0 ? null : list.get(0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

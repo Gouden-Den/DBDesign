@@ -1,12 +1,10 @@
-<%@ page import="service.UserService" %>
-<%@ page import="java.util.List" %>
-<%@ page import="entity.User" %>
-<%@ page import="entity.DeviceInfo" %>
-<%@ page import="service.DeviceInfoService" %><%--
+<%@ page import="service.RoleService" %>
+<%@ page import="entity.Role" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: 泽先
   Date: 2018/4/10
-  Time: 13:11
+  Time: 13:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -139,25 +137,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -172,7 +158,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">设备</h1>
+                <h1 class="page-header">Forms</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -181,77 +167,37 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        修改设备信息
+                        Basic Form Elements
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" action="/device?method=update" method="post">
-                                    <%
-                                        DeviceInfo deviceInfo=new DeviceInfoService().getDeviceInfo(request.getParameter("deviceID"))
-                                    %>
-                                    <input type="hidden" name="deviceID" value=<%=deviceInfo.getDeviceID()%>/>
+                                <form role="form" action="/user?method=add" method="post">
                                     <div class="form-group">
-                                        <label>设备id</label>
-                                        <input name="deviceID" class="form-control">
+                                        <label>用户Id</label>
+                                        <input name="userId" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label>设备名</label>
-                                        <input name="deviceName" class="form-control">
+                                        <label>用户名</label>
+                                        <input name="username" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label>类别id</label>
-                                        <input name="typeID" class="form-control">
+                                        <label>密码</label>
+                                        <input name="password" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label>设备TS</label>
-                                        <input name="deviceTS" class="form-control">
+                                        <label>权限</label>
+                                        <select name="roleId" class="form-control">
+                                            <%
+                                                RoleService roleService = new RoleService();
+                                                List<Role> list = roleService.queryUserInfo();
+                                                for (Role role : list){
+                                                    out.print("<option>" + role.getRoleID() + "|" + role.getRoleName() + "</option>");
+                                                }
+                                            %>
+                                        </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label>设备状态</label>
-                                        <input name="deviceState" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>购买日期</label>
-                                        <input name="buyDate" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>安装日期</label>
-                                        <input name="installDate" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>部门ID</label>
-                                        <input name="departmenID" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>设备原值</label>
-                                        <input name="deviceValue" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>安装地点</label>
-                                        <input name="installSite" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>生产厂家</label>
-                                        <input name="productFactory" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>使用日期</label>
-                                        <input name="useDate" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>使用时间</label>
-                                        <input name="useTime" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>残值</label>
-                                        <input name="salvageValue" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>折旧金额</label>
-                                        <input name="montholdValue" class="form-control">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">修改</button>
+                                    <button type="submit" class="btn btn-default">Submit Button</button>
                                 </form>
                             </div>
                         </div>
@@ -285,3 +231,4 @@
 </body>
 
 </html>
+

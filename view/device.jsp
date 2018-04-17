@@ -1,6 +1,9 @@
-<%@ page import="java.util.List" %>
-<%@ page import="service.DeviceInfoService" %>
+<%@ page import="entity.DepartmentInfo" %>
+<%@ page import="service.DepartmentInfoService" %>
+<%@ page import="entity.DeviceType" %>
+<%@ page import="service.DeviceTypeService" %>
 <%@ page import="entity.DeviceInfo" %>
+<%@ page import="service.DeviceInfoService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -131,25 +134,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -164,7 +155,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">设备基本信息</h1>
+                <h1 class="page-header">部门</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -173,63 +164,84 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        设备基本信息
+                        类别详细信息
                     </div>
-                    <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
-                            <thead>
-                            <tr>
-                                <th>设备编号</th>
-                                <th>设备名称</th>
-                                <th>类别编号</th>
-                                <th>型号规格</th>
-                                <th>设备状态</th>
-                                <!--<th>购入日期</th>-->
-                                <!--<th>安装日期</th>-->
-                                <th>使用部门编号</th>
-                                <th>原值</th>
-                                <th>安装地点</th>
-                                <!--<th>生产厂</th>-->
-                                <th>使用次数</th>
-                                <th>使用年限</th>
-                                <!--<th>残值</th>-->
-                                <!--<th>月折旧金额</th>-->
-                                <!--<th>备注</th>-->
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <%
-                                DeviceInfoService deviceInfoService = new DeviceInfoService();
-                                List<DeviceInfo> results = deviceInfoService.queryDeviceInfo();
-                                out.print("<tbody>");
-                                for (DeviceInfo deviceInfo : results){
-                                    out.print("<tr class=\"odd gradeX\">\n" +
-                                            "       <td><a href=\"/device?method=get&typeId=" + deviceInfo.getDeviceID() + "\">" + deviceInfo.getDeviceID() + "</a></td>\n" +
-                                            "       <td>" + deviceInfo.getDeviceName() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getTypeID() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getDeviceTS() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getDeviceState() + "</td>\n" +
-                                            //"       <td>" + deviceInfo.getBuyDate() + "</td>\n" +
-                                            //"       <td>" + deviceInfo.getInstallDate() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getDepartmentID() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getDeviceValue() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getInstallSite() + "</td>\n" +
-                                            //"       <td>" + deviceInfo.getProductFactory() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getUseDate() + "</td>\n" +
-                                            "       <td>" + deviceInfo.getUseTime() + "</td>\n" +
-                                            //"       <td>" + deviceInfo.getSalvageValue() + "</td>\n" +
-                                            //"       <td>" + deviceInfo.getMontholdValue() + "</td>\n" +
-                                            "       <td><a href=\"/device?method=delete&typeId=" + deviceInfo.getDeviceID() + "\">删除</a>&nbsp;&nbsp;" +
-                                            "       <a href=\"/device?method=updateTo&typeId=" + deviceInfo.getDeviceID() + "\">修改</a>&nbsp;&nbsp;" +
-                                            (deviceInfo.getDepartmentID() == null || deviceInfo.getDepartmentID().equals("") ?
-                                            "       <a href=\"/device?method=requestUse&typeId=" + deviceInfo.getDeviceID() + "\">申请使用</a>" :
-                                            "       </td>") +
-                                            "   </tr>");
-                                }
-                                out.print("</tbody>");
-                            %>
-                        </table>
+                        <div class="row">
+                            <!-- /.col-lg-6 (nested) -->
+                            <div class="col-lg-6">
+                                <h1>类别信息</h1>
+                                <form role="form">
+                                    <fieldset disabled>
+                                        <%
+                                            DeviceInfo deviceInfo = new DeviceInfoService().getDeviceInfo(request.getParameter("deviceId"));
+                                        %>
+                                        <div class="form-group">
+                                            <label>设备Id</label>
+                                            <input class="form-control" id="deviceID" type="text" value=<%=deviceInfo.getDeviceID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备名</label>
+                                            <input class="form-control" id="deviceName" type="text" value=<%=deviceInfo.getDeviceName()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>类型Id</label>
+                                            <input class="form-control" id="typeID" type="text" value=<%=deviceInfo.getTypeID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>型号规格</label>
+                                            <input class="form-control" id="deviceTS" type="text" value=<%=deviceInfo.getDeviceTS()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备状态</label>
+                                            <input class="form-control" id="deviceState" type="text" value=<%=deviceInfo.getDeviceState()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>购买日期</label>
+                                            <input class="form-control" id="buyDate" type="text" value=<%=deviceInfo.getBuyDate()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>安装日期</label>
+                                            <input class="form-control" id="installDate" type="text" value=<%=deviceInfo.getDeviceTS()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>部门Id</label>
+                                            <input class="form-control" id="departmentID" type="text" value=<%=deviceInfo.getDepartmentID()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>设备原值</label>
+                                            <input class="form-control" id="deviceValue" type="text" value=<%=deviceInfo.getDeviceValue()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>安装地点</label>
+                                            <input class="form-control" id="installSite" type="text" value=<%=deviceInfo.getInstallSite()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>生产厂家</label>
+                                            <input class="form-control" id="productFactory" type="text" value=<%=deviceInfo.getProductFactory()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>使用日期</label>
+                                            <input class="form-control" id="useDate" type="text" value=<%=deviceInfo.getUseDate()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>使用次数</label>
+                                            <input class="form-control" id="useTime" type="text" value=<%=deviceInfo.getUseTime()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>残值</label>
+                                            <input class="form-control" id="salvageValue" type="text" value=<%=deviceInfo.getSalvageValue()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>月折旧金额</label>
+                                            <input class="form-control" id="montholdValue" type="text" value=<%=deviceInfo.getMontholdValue()%> disabled>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        <!-- /.row (nested) -->
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -237,6 +249,7 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
 
@@ -252,22 +265,8 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- DataTables JavaScript -->
-<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
-
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-</script>
 
 </body>
 

@@ -1,13 +1,10 @@
-<%@ page import="service.UserService" %>
-<%@ page import="java.util.List" %>
-<%@ page import="entity.User" %>
-<%@ page import="entity.DeviceType" %>
 <%@ page import="service.DeviceTypeService" %>
-<%@ page import="entity.DeviceType" %><%--
+<%@ page import="entity.DeviceType" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: 泽先
   Date: 2018/4/10
-  Time: 13:11
+  Time: 13:39
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -140,25 +137,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -187,28 +172,20 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" action="/deviceType?method=update" method="post">
-                                    <%
-                                        DeviceType deviceType=new DeviceTypeService().getDeviceType(request.getParameter("typeId"));
-                                    %>
-                                    <input type="hidden" name="typeID" value=<%=deviceType.getTypeID()%>>
+                                <form role="form" action="/deviceType?method=add" method="post">
                                     <div class="form-group">
-                                        <label>类别id</label>
-                                        <input name="typeID" class="form-control" value=<%=deviceType.getTypeID()%> disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>设备名</label>
-                                        <input name="typeName" class="form-control" value=<%=deviceType.getTypeName()%>>
+                                        <label>设备类别名</label>
+                                        <input name="typeName" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>设备数量</label>
-                                        <input name="deviceNum" class="form-control" value=<%=deviceType.getDeviceNum()%>>
+                                        <input name="deviceNum" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>设备原值</label>
-                                        <input name="deviceValue" class="form-control" value=<%=deviceType.getDeviceValue()%>>
+                                        <input name="deviceValue" class="form-control">
                                     </div>
-                                    <button type="submit" class="btn btn-default">修改</button>
+                                    <button type="submit" class="btn btn-default">提交</button>
                                 </form>
                             </div>
                         </div>
@@ -242,3 +219,4 @@
 </body>
 
 </html>
+

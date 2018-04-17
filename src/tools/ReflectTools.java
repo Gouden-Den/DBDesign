@@ -21,9 +21,12 @@ public class ReflectTools {
         for (Field field : fields){
             param = request.getParameter(field.getName());
             Method method = t.getMethod("set" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1), field.getType());
+            if (param == null){
+                continue;
+            }
             if (field.getType().equals(String.class)){
                 method.invoke(t1, param);
-            }if (field.getType().equals(Integer.class)){
+            }else if (field.getType().equals(Integer.class)){
                 method.invoke(t1, Integer.valueOf(param));
             }else if (field.getType().equals(Double.class)){
                 method.invoke(t1, Double.valueOf(param));

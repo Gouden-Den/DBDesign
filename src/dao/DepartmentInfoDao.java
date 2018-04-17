@@ -50,24 +50,18 @@ public class DepartmentInfoDao extends BaseDao {
     }
     public boolean update(DepartmentInfo departmentInfo) throws SQLException
     {
-        try(Connection conn=getConnection())
-        {
-            String sql="update department_info set department_id=?,department_name=?,department_manager=?,device_num=?,device_value=?";
+        try(Connection conn=getConnection()) {
+            String sql="update department_info set department_name=?,department_manager=? where department_id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
-            statement.setString(1,departmentInfo.getDepartmentID());
-            statement.setString(2,departmentInfo.getDepartmentName());
-            statement.setString(3,departmentInfo.getDepartmentManager());
-            statement.setInt(4,departmentInfo.getDeviceNum());
-            statement.setDouble(5,departmentInfo.getDeviceValue());
+            statement.setString(1,departmentInfo.getDepartmentName());
+            statement.setString(2,departmentInfo.getDepartmentManager());
+            statement.setString(3,departmentInfo.getDepartmentID());
             int res=statement.executeUpdate();
             conn.commit();
-            if(res>0)
-            {
+            if(res>0) {
                 return true;
             }
-        }catch (Exception e)
-        {
-
+        }catch (Exception e) {
         }
         return false;
     }

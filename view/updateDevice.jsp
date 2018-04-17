@@ -1,8 +1,10 @@
 <%@ page import="service.UserService" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entity.User" %>
-<%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %><%--
+<%@ page import="entity.DeviceInfo" %>
+<%@ page import="service.DeviceInfoService" %>
+<%@ page import="service.DepartmentInfoService" %>
+<%@ page import="entity.DepartmentInfo" %><%--
   Created by IntelliJ IDEA.
   User: 泽先
   Date: 2018/4/10
@@ -139,25 +141,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -172,7 +162,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Forms</h1>
+                <h1 class="page-header">设备</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -181,35 +171,62 @@
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Basic Form Elements
+                        修改设备信息
                     </div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6">
-                                <form role="form" action="/department?method=update" method="post">
+                                <form role="form" action="/device?method=update" method="post">
                                     <%
-                                        DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentInfo(request.getParameter("departmentId"));
+                                        DeviceInfo deviceInfo=new DeviceInfoService().getDeviceInfo(request.getParameter("deviceId"));
                                     %>
-                                    <input type="hidden" name="departmentId" value=<%=departmentInfo.getDepartmentID()%>/>
                                     <div class="form-group">
-                                        <label>部门名称</label>
-                                        <input name="departmentName" class="form-control" value=<%=departmentInfo.getDepartmentName()%>>
+                                        <label>设备id</label>
+                                        <input name="deviceID" class="form-control" value=<%=deviceInfo.getDeviceID()%> disabled>
                                     </div>
                                     <div class="form-group">
-                                        <label>部门经理</label>
-                                        <select name="departmentManager" class="form-control">
-                                            <%
-                                                UserService userService = new UserService();
-                                                List<User> list = userService.queryUserInfo();
-                                                String id = departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|"));
-                                                for (User user : list){
-                                                    if (user.getUserId().equals(id)){
-                                                        out.print("<option selected=\"selected\">" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                    }
-                                                    out.print("<option>" + user.getUserId() + "|" + user.getUsername() + "</option>");
-                                                }
-                                            %>
-                                        </select>
+                                        <label>设备名</label>
+                                        <input name="deviceName" class="form-control" value=<%=deviceInfo.getDeviceName()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>类别id</label>
+                                        <input name="typeID" class="form-control" value=<%=deviceInfo.getTypeID()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备TS</label>
+                                        <input name="deviceTS" class="form-control" value=<%=deviceInfo.getDeviceTS()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备状态</label>
+                                        <input name="deviceState" class="form-control" value=<%=deviceInfo.getDeviceState()%> disable>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>购买日期</label>
+                                        <input name="buyDate" class="form-control" value=<%=deviceInfo.getBuyDate()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>安装日期</label>
+                                        <input name="installDate" class="form-control" value=<%=deviceInfo.getInstallDate()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>设备原值</label>
+                                        <input name="deviceValue" class="form-control" value=<%=deviceInfo.getDeviceValue()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>安装地点</label>
+                                        <input name="installSite" class="form-control" value=<%=deviceInfo.getInstallSite()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>生产厂家</label>
+                                        <input name="productFactory" class="form-control" value=<%=deviceInfo.getProductFactory()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>残值</label>
+                                        <input name="salvageValue" class="form-control" value=<%=deviceInfo.getSalvageValue()%>>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>月折旧金额</label>
+                                        <input name="montholdValue" class="form-control" value=<%=deviceInfo.getMontholdValue()%>>
                                     </div>
                                     <button type="submit" class="btn btn-default">修改</button>
                                 </form>
@@ -245,4 +262,3 @@
 </body>
 
 </html>
-

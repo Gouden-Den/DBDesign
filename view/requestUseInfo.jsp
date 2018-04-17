@@ -1,7 +1,12 @@
-<%@ page import="entity.DepartmentInfo" %>
 <%@ page import="service.DepartmentInfoService" %>
+<%@ page import="java.util.List" %>
+<%@ page import="entity.DepartmentInfo" %>
 <%@ page import="service.DeviceTypeService" %>
-<%@ page import="service.DeviceInfoService" %>
+<%@ page import="entity.DeviceType" %>
+<%@ page import="service.RequestUseService" %>
+<%@ page import="entity.RequestUse" %>
+<%@ page import="entity.User" %>
+<%@ page import="service.UserService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,25 +137,13 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="panels-wells.html">Panels and Wells</a>
+                                <a href="requestUseInfo.jsp">待批准</a>
                             </li>
                             <li>
-                                <a href="buttons.html">Buttons</a>
-                            </li>
-                            <li>
-                                <a href="notifications.html">Notifications</a>
-                            </li>
-                            <li>
-                                <a href="typography.html">Typography</a>
-                            </li>
-                            <li>
-                                <a href="icons.html"> Icons</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grid</a>
+                                <a href="usingInfo.jsp">已批准</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -165,109 +158,57 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">欢迎进入设备管理系统</h1>
+                <h1 class="page-header">设备基本信息</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <%
-            DepartmentInfoService departmentInfoService = new DepartmentInfoService();
-            DeviceTypeService deviceTypeService = new DeviceTypeService();
-            DeviceInfoService deviceInfoService = new DeviceInfoService();
-        %>
         <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-primary">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-comments fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">
-                                    <%=departmentInfoService.getDepartmentNum()%>
-                                </div>
-                                <div>部门信息!</div>
-                            </div>
-                        </div>
+                        设备基本信息
                     </div>
-                    <a href="departmentTables.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-tasks fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">
-                                    <%=deviceTypeService.getDeviceTypeNum()%>
-                                </div>
-                                <div>设备类别信息!</div>
-                            </div>
-                        </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                            <tr>
+                                <th>部门Id</th>
+                                <th>设备Id</th>
+                                <th>申请时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <%
+                                DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentByManager((String) session.getAttribute("userId"));
+                                RequestUseService requestUseService = new RequestUseService();
+                                List<RequestUse> results = requestUseService.queryRequestUse(departmentInfo == null ? null : departmentInfo.getDepartmentID(), 0);
+                                User user = new UserService().getUser((String) session.getAttribute("userId"));
+                                out.print("<tbody>");
+                                if (results == null){
+                                    return;
+                                }
+                                for (RequestUse requestUse : results){
+                                    out.print("<tr class=\"odd gradeX\">\n" +
+                                            "       <td><a href=\"/department?method=get&departmentId=" + requestUse.getDepartmentID() + "\">" + requestUse.getDepartmentID() + "</a></td>\n" +
+                                            "       <td><a href=\"/device?method=get&deviceId=" + requestUse.getDeviceID() + "\">" + requestUse.getDeviceID() + "</td>\n" +
+                                            "       <td>" + requestUse.getRequestDate() + "</td>\n" +
+                                            (user.getRoleId().equals("1") ?
+                                            "       <td><a href=\"/requestUse?method=answer&departmentID=" + requestUse.getDepartmentID() + "&deviceID=" + requestUse.getDeviceID() + "&status=" + requestUse.getStatus() + "&newStatus=1\">批准</a>&nbsp;&nbsp;" +
+                                            "       <a href=\"/requestUse?method=answer&departmentID=" + requestUse.getDepartmentID() + "&deviceID=" + requestUse.getDeviceID() + "&status=" + requestUse.getStatus() + "&newStatus=2\">拒绝</a></td>" :
+                                            "") +
+                                            "   </tr>");
+                                }
+                                out.print("</tbody>");
+                            %>
+                        </table>
                     </div>
-                    <a href="deviceTypeInfo.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <!-- /.panel-body -->
                 </div>
+                <!-- /.panel -->
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-support fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge"><%=deviceInfoService.getDeviceNum()%></div>
-                                <div>设备基本信息!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="deviceInfo.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-shopping-cart fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">124</div>
-                                <div>申请使用设备!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            <!-- /.col-lg-12 -->
         </div>
     </div>
     <!-- /#page-wrapper -->
@@ -284,13 +225,22 @@
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-<!-- Morris Charts JavaScript -->
-<script src="../vendor/raphael/raphael.min.js"></script>
-<script src="../vendor/morrisjs/morris.min.js"></script>
-<script src="../data/morris-data.js"></script>
+<!-- DataTables JavaScript -->
+<script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+<script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+<script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+</script>
 
 </body>
 
