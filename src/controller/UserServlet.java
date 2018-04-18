@@ -23,6 +23,9 @@ public class UserServlet extends HttpServlet{
                 delete(request, response);
             }else if ("update".equals(method)){
                 delete(request, response);
+            }else if ("logout".equals(method)){
+                request.removeAttribute("userId");
+                response.sendRedirect("/login.jsp");
             }else {
                 //错误页面
                 response.sendRedirect("");

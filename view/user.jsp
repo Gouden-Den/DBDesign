@@ -1,9 +1,5 @@
-<%@ page import="entity.DepartmentInfo" %>
-<%@ page import="service.DepartmentInfoService" %>
-<%@ page import="service.DeviceTypeService" %>
-<%@ page import="service.DeviceInfoService" %>
-<%@ page import="entity.RequestUse" %>
-<%@ page import="service.RequestUseService" %>
+<%@ page import="entity.*" %>
+<%@ page import="service.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -203,114 +199,53 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">欢迎进入设备管理系统</h1>
+                <h1 class="page-header">部门</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
         <!-- /.row -->
-        <%
-            DepartmentInfoService departmentInfoService = new DepartmentInfoService();
-            DeviceTypeService deviceTypeService = new DeviceTypeService();
-            DeviceInfoService deviceInfoService = new DeviceInfoService();
-            RequestUseService requestUseService = new RequestUseService();
-        %>
         <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-primary">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
                     <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-comments fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">
-                                    <%=departmentInfoService.getDepartmentNum()%>
-                                </div>
-                                <div>部门信息!</div>
-                            </div>
-                        </div>
+                        用户详细信息
                     </div>
-                    <a href="departmentTables.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
+                    <div class="panel-body">
                         <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-tasks fa-5x"></i>
+                            <!-- /.col-lg-6 (nested) -->
+                            <div class="col-lg-6">
+                                <h1>用户详细信息</h1>
+                                <form role="form">
+                                    <fieldset disabled>
+                                        <%
+                                            User user = new UserService().getUser((String) session.getAttribute("userId"));
+                                        %>
+                                        <div class="form-group">
+                                            <label>用户Id</label>
+                                            <input class="form-control" id="userID" type="text" value=<%=user.getUserId()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>用户名</label>
+                                            <input class="form-control" id="username" type="text" value=<%=user.getUsername()%> disabled>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>用户角色</label>
+                                            <input class="form-control" id="roleId" type="text" value=<%=new RoleService().getRole(user.getRoleId()).getRoleName()%> disabled>
+                                        </div>
+                                    </fieldset>
+                                </form>
                             </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">
-                                    <%=deviceTypeService.getDeviceTypeNum()%>
-                                </div>
-                                <div>设备类别信息!</div>
-                            </div>
+                            <!-- /.col-lg-6 (nested) -->
                         </div>
+                        <!-- /.row (nested) -->
                     </div>
-                    <a href="deviceTypeInfo.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
+                    <!-- /.panel-body -->
                 </div>
+                <!-- /.panel -->
             </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-red">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-support fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge"><%=deviceInfoService.getDeviceNum()%></div>
-                                <div>设备基本信息!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="deviceInfo.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-yellow">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-shopping-cart fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <%
-                                    DepartmentInfo departmentInfo = new DepartmentInfoService().getDepartmentByManager((String) session.getAttribute("userId"));
-                                %>
-                                <div class="huge"><%=requestUseService.queryRequestUse(departmentInfo == null ? null : departmentInfo.getDepartmentID(), 0).size()%></div>
-                                <div>申请使用设备!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="requestUseInfo.jsp">
-                        <div class="panel-footer">
-                            <span class="pull-left">详情</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            <!-- /.col-lg-12 -->
         </div>
+        <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
 
@@ -325,11 +260,6 @@
 
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-<!-- Morris Charts JavaScript -->
-<script src="../vendor/raphael/raphael.min.js"></script>
-<script src="../vendor/morrisjs/morris.min.js"></script>
-<script src="../data/morris-data.js"></script>
 
 <!-- Custom Theme JavaScript -->
 <script src="../dist/js/sb-admin-2.js"></script>
