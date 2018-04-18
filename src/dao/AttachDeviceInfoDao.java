@@ -8,7 +8,7 @@ public class AttachDeviceInfoDao extends BaseDao {
     {
         Connection conn=getConnection();
         try{
-            String sql="insert into attch_device_info(device_id,attach_type,attach_device_id,attach_device_name,attach_num,attach_value) values (?,?,?,?,?,?)";
+            String sql="insert into attach_device_info(device_id,attach_type,attach_device_id,attach_device_name,attach_num,attach_value) values (?,?,?,?,?,?)";
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setString(1,attachDeviceInfo.getDeviceID());
             statement.setInt(2,attachDeviceInfo.getAttachType());
@@ -34,13 +34,14 @@ public class AttachDeviceInfoDao extends BaseDao {
         }
         return false;
     }
-    public boolean delete(String attachdeviceid) throws SQLException
+    public boolean delete(String attachdeviceid,String deviceid) throws SQLException
     {
         try(Connection conn=getConnection())
         {
-            String sql="delete from attach_device_info where attach_device_id=?";
+            String sql="delete from attach_device_info where attach_device_id=? and device_id=?";
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setString(1,attachdeviceid);
+            statement.setString(2,deviceid);
             int res=statement.executeUpdate();
             conn.commit();
             if(res>0)

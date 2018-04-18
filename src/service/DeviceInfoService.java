@@ -28,10 +28,10 @@ public class DeviceInfoService {
         return deviceInfoDao.getDeviceInfo(deviceInfoId);
     }
 
-    public List<DeviceInfo> queryDeviceInfo() throws Exception {
+    public List<DeviceInfo> queryDeviceInfo(int deviceState) throws Exception {
         try {
-            String sql = "select * from device_info";
-            return deviceInfoDao.queryAll(sql, null, DeviceInfo.class);
+            String sql = "select * from device_info where device_state=?";
+            return deviceInfoDao.queryAll(sql, new Object[]{deviceState}, DeviceInfo.class);
         }catch (Exception e){
             e.printStackTrace();
         }

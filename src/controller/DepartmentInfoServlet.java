@@ -1,6 +1,8 @@
 package controller;
 import entity.DepartmentInfo;
+import entity.User;
 import service.DepartmentInfoService;
+import service.UserService;
 import tools.GenerateTools;
 import  tools.ReflectTools;
 
@@ -12,6 +14,7 @@ import java.io.IOException;
 
 public class DepartmentInfoServlet extends HttpServlet{
     DepartmentInfoService departmentInfoService=new DepartmentInfoService();
+    UserService userService = new UserService();
     public void doGet(HttpServletRequest request,HttpServletResponse response)
     {
         try{
@@ -42,12 +45,15 @@ public class DepartmentInfoServlet extends HttpServlet{
     private void add(HttpServletRequest request,HttpServletResponse response) throws Exception{
         DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
         departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
-        if (departmentInfoService.getDepartmentByManager(departmentInfo.getDepartmentManager()) != null){
+        if (userService.getUser(departmentInfo.getDepartmentManager()).getRoleId().equals("1")){
+            request.setAttribute("message", "系统管理员不能为部门经理");
+            throw new Exception();
+        } else if (departmentInfoService.getDepartmentByManager(departmentInfo.getDepartmentManager()) != null){
             request.setAttribute("message", "该用户已是部门经理");
             throw new Exception();
         }
         departmentInfo.setDepartmentID(GenerateTools.getId());
-        departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager().substring(0, departmentInfo.getDepartmentManager().lastIndexOf("|")));
+        departmentInfo.setDepartmentManager(departmentInfo.getDepartmentManager());
         departmentInfoService.insert(departmentInfo);
         response.sendRedirect("/departmentTables.jsp");
     }
@@ -58,7 +64,10 @@ public class DepartmentInfoServlet extends HttpServlet{
     }
     private void update(HttpServletRequest request,HttpServletResponse response) throws Exception{
         DepartmentInfo departmentInfo=ReflectTools.ReflectTo(request,DepartmentInfo.class);
-        if (departmentInfoService.getDepartmentByManager(departmentInfo.getDepartmentManager()) != null){
+        if (userService.getUser(departmentInfo.getDepartmentManager()).getRoleId().equals("1")){
+            request.setAttribute("message", "系统管理员不能为部门经理");
+            throw new Exception();
+        } else if (departmentInfoService.getDepartmentByManager(departmentInfo.getDepartmentManager()) != null){
             request.setAttribute("message", "该用户已是部门经理");
             throw new Exception();
         }

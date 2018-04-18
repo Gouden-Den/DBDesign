@@ -189,11 +189,11 @@
                             </thead>
                             <%
                                 DeviceInfoService deviceInfoService = new DeviceInfoService();
-                                List<DeviceInfo> results = deviceInfoService.queryDeviceInfo();
+                                List<DeviceInfo> results = deviceInfoService.queryDeviceInfo(1);
                                 out.print("<tbody>");
                                 for (DeviceInfo deviceInfo : results){
                                     out.print("<tr class=\"odd gradeX\">\n" +
-                                            "       <td><a href=\"/device?method=get&deviceId=" + deviceInfo.getDeviceID() + "\">" + deviceInfo.getDeviceID() + "</a></td>\n" +
+                                            "       <td><a href=\"/attachdeviceinfo.jsp?deviceId=" + deviceInfo.getDeviceID() + "\">" + deviceInfo.getDeviceID() + "</a></td>\n" +
                                             "       <td>" + deviceInfo.getDeviceName() + "</td>\n" +
                                             "       <td>" + deviceInfo.getTypeID() + "</td>\n" +
                                             "       <td>" + deviceInfo.getDeviceTS() + "</td>\n" +

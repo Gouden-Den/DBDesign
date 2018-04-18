@@ -31,6 +31,7 @@ public class DeviceInfoServlet extends HttpServlet{
             }else if ("requestUse".equals(method)){
                 String userId = (String) request.getSession().getAttribute("userId");
                 if (userId == null || !departmentInfoService.isDepartmentManager(userId)){
+                    request.setAttribute("message", "未登录或该用户不能申请使用该设备");
                     throw new Exception();
                 }
                 RequestUse requestUse = new RequestUse();

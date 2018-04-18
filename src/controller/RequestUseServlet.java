@@ -1,7 +1,9 @@
 package controller;
 
+import entity.DepartmentInfo;
 import entity.DeviceInfo;
 import entity.RequestUse;
+import service.DepartmentInfoService;
 import service.DeviceInfoService;
 import service.RequestUseService;
 import tools.ReflectTools;
@@ -14,6 +16,7 @@ import java.sql.Date;
 public class RequestUseServlet extends HttpServlet{
     RequestUseService requestUseService=new RequestUseService();
     DeviceInfoService deviceInfoService=new DeviceInfoService();
+    DepartmentInfoService departmentInfoService = new DepartmentInfoService();
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
         try {
             String method=request.getParameter("method");
@@ -58,7 +61,11 @@ public class RequestUseServlet extends HttpServlet{
             deviceInfo.setDepartmentID(requestUse.getDepartmentID());
             deviceInfo.setUseDate(new Date(System.currentTimeMillis()));
             deviceInfo.setUseTime(deviceInfo.getUseTime() + 1);
+            DepartmentInfo departmentInfo = departmentInfoService.getDepartmentInfo(requestUse.getDepartmentID());
+            departmentInfo.setDeviceValue(departmentInfo.getDeviceValue() + deviceInfo.getDeviceValue());
+            departmentInfo.setDeviceNum(departmentInfo.getDeviceNum() + 1);
             deviceInfoService.update(deviceInfo);
+            departmentInfoService.update(departmentInfo);
         }
         requestUseService.update(requestUse, newStatus);
         response.sendRedirect("/requestUseInfo.jsp");

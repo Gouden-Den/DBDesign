@@ -6,7 +6,7 @@ public class DeviceInfoDao extends BaseDao {
     public boolean insert(DeviceInfo deviceInfo) throws SQLException
     {
         try(Connection conn=getConnection()){
-            String sql="insert into device_info(device_id,device_name,type_id,device_ts,device_state,buy_date,install_date,department_id,device_value,install_site,product_factory,use_date,use_time,salvage_value,month_old_value) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql="insert into device_info(device_id,device_name,type_id,device_ts,device_state,buy_date,install_date,department_id,device_value,install_site,product_factory,use_date,salvage_value,month_old_value) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement statement=conn.prepareStatement(sql);
             statement.setString(1,deviceInfo.getDeviceID());
             statement.setString(2,deviceInfo.getDeviceName());
@@ -20,9 +20,8 @@ public class DeviceInfoDao extends BaseDao {
             statement.setString(10,deviceInfo.getInstallSite());
             statement.setString(11,deviceInfo.getProductFactory());
             statement.setDate(12,deviceInfo.getUseDate());
-            statement.setInt(13,deviceInfo.getUseTime());
-            statement.setDouble(14,deviceInfo.getSalvageValue());
-            statement.setDouble(15,deviceInfo.getMontholdValue());
+            statement.setDouble(13,deviceInfo.getSalvageValue());
+            statement.setDouble(14,deviceInfo.getMontholdValue());
             int res=statement.executeUpdate();
             conn.commit();
             if(res>0) {
