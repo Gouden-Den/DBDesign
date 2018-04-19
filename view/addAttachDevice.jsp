@@ -6,7 +6,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,6 +22,9 @@
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -49,78 +51,83 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+            <a class="navbar-brand" href="index.jsp">
+                <%
+                    out.print(session.getAttribute("userId"));
+                %>
+            </a>
         </div>
         <!-- /.navbar-header -->
 
-
-        <!-- /.navbar-top-links --><ul class="nav navbar-top-links navbar-right">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-messages">
-                <li>
-                    <a href="#">
-                        <div>
-                            <strong>John Smith</strong>
-                            <span class="pull-right text-muted">
+        <ul class="nav navbar-top-links navbar-right">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-messages">
+                    <li>
+                        <a href="#">
+                            <div>
+                                <strong>John Smith</strong>
+                                <span class="pull-right text-muted">
                                         <em>Yesterday</em>
                                     </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <strong>John Smith</strong>
-                            <span class="pull-right text-muted">
+                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <strong>John Smith</strong>
+                                <span class="pull-right text-muted">
                                         <em>Yesterday</em>
                                     </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a href="#">
-                        <div>
-                            <strong>John Smith</strong>
-                            <span class="pull-right text-muted">
+                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <strong>John Smith</strong>
+                                <span class="pull-right text-muted">
                                         <em>Yesterday</em>
                                     </span>
-                        </div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                    </a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a class="text-center" href="#">
-                        <strong>Read All Messages</strong>
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </li>
-            </ul>
-            <!-- /.dropdown-messages -->
+                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="text-center" href="#">
+                            <strong>Read All Messages</strong>
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-messages -->
+                <!-- /.dropdown -->
+            <li class="dropdown">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li><a href="/user.jsp"><i class="fa fa-user fa-fw"></i> 用户信息</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="/user?method=logout"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
             <!-- /.dropdown -->
-        <li class="dropdown">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-user">
-                <li><a href="/user.jsp"><i class="fa fa-user fa-fw"></i> 用户信息</a>
-                </li>
-                <li class="divider"></li>
-                <li><a href="/user?method=logout"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
-                </li>
-            </ul>
-            <!-- /.dropdown-user -->
-        </li>
-        <!-- /.dropdown -->
-    </ul>
+        </ul>
+        <!-- /.navbar-top-links -->
+        <div class="chs">Collect from <a href="http://www.cssmoban.com/" >网页模板</a></div>
 
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
@@ -137,28 +144,51 @@
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        <a href="index.jsp"><i class="fa fa-dashboard fa-fw"></i> 首页</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> 部门<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="flot.html">Flot Charts</a>
+                                <a href="addDepartment.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 添加部门</a>
                             </li>
                             <li>
-                                <a href="morris.html">Morris.js Charts</a>
+                                <a href="departmentTables.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 部门信息</a>
                             </li>
                         </ul>
-                        <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> 设备类别<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="addDeviceType.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 添加设备类别</a>
+                            </li>
+                            <li>
+                                <a href="deviceTypeInfo.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 设备类别信息</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms</a>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> 设备<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="addDevice.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 添加设备</a>
+                            </li>
+                            <li>
+                                <a href="deviceInfo.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 设备基本信息</a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> 附属设备<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="addAttachDevice.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 添加附属设备</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-wrench fa-fw"></i> 生成报表<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
                                 <a href="panels-wells.html">Panels and Wells</a>
@@ -177,48 +207,6 @@
                             </li>
                             <li>
                                 <a href="grid.html">Grid</a>
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Second Level Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Third Level <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level Item</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-third-level -->
-                            </li>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="blank.html">Blank Page</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Login Page</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->

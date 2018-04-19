@@ -186,9 +186,6 @@
                             <li>
                                 <a href="addAttachDevice.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 添加附属设备</a>
                             </li>
-                            <li>
-                                <a href="attachdeviceinfo.jsp.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 附属设备基本信息</a>
-                            </li>
                         </ul>
                     </li>
                     <li>

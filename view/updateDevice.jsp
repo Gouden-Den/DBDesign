@@ -189,6 +189,14 @@
                         </ul>
                     </li>
                     <li>
+                        <a href="#"><i class="fa fa-sitemap fa-fw"></i> 附属设备<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="addAttachDevice.jsp"><i class="fa fa-bar-chart-o fa-fw"></i> 添加附属设备</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> 申请设备<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
